@@ -4,7 +4,7 @@
   "description": "NodeJs Client library for IRIS / BBS API",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "NODE_ENV=test ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha"
   },
   "repository": {
     "type": "git",
@@ -26,6 +26,7 @@
     "xml2js": "^0.4.4"
   },
   "devDependencies": {
+    "istanbul": "^0.3.2",
     "mocha": "^2.0.1",
     "nock": "^0.50.0",
     "should": "^4.3.0"
