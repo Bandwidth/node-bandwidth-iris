@@ -55,5 +55,46 @@ describe("client tests", function(){
         done();
       });
     });
+    it("should make POST request and parse output xml data", function(done){
+      var span = nock("https://api.inetwork.com").post("/v1.0/test", "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<Root>\n  <Test1>test1</Test1>\n</Root>")
+        .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>test</Test></Response>", {"Content-Type": "application/xml"});
+      client.makeRequest("post", "/test", {
+        root: {
+          test1: "test1"
+        }
+      }, function(err, r){
+        if(err){
+          return done(err);
+        }
+        r.test.should.equal("test");
+        done();
+      });
+    });
+    it("should make PUT request and parse output xml data", function(done){
+      var span = nock("https://api.inetwork.com").put("/v1.0/test", "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<Root>\n  <Test1>test1</Test1>\n</Root>")
+        .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>test</Test></Response>", {"Content-Type": "application/xml"});
+      client.makeRequest("put", "/test", {
+        root: {
+          test1: "test1"
+        }
+      }, function(err, r){
+        if(err){
+          return done(err);
+        }
+        r.test.should.equal("test");
+        done();
+      });
+    });
+    it("should make DELETE request and parse output xml data", function(done){
+      var span = nock("https://api.inetwork.com").delete("/v1.0/test")
+        .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>test</Test></Response>", {"Content-Type": "application/xml"});
+      client.makeRequest("delete", "/test", function(err, r){
+        if(err){
+          return done(err);
+        }
+        r.test.should.equal("test");
+        done();
+      });
+    });
   });
 });
