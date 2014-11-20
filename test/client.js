@@ -29,6 +29,22 @@ describe("client tests", function(){
       });
     });
 
+    it("should make GET request and handle requests without output", function(done){
+      var span = nock("https://api.inetwork.com").get("/v1.0/test")
+        .reply(200);
+      client.makeRequest("get", "/test", done);
+    });
+
+    it("should make GET request and handle error status", function(done){
+      var span = nock("https://api.inetwork.com").get("/v1.0/test")
+        .reply(400);
+      client.makeRequest("get", "/test", function(err, r){
+        if(err){
+          return done();
+        }
+        done(new Error("Error is expected"));
+      });
+    });
     it("should make GET request with query and parse output xml data", function(done){
       var span = nock("https://api.inetwork.com").get("/v1.0/test?param1=1&param2=test&param3=true")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>test</Test><Number>1234</Number><Bool>true</Bool></Response>", {"Content-Type": "application/xml"});
@@ -48,21 +64,23 @@ describe("client tests", function(){
     });
     it("should make GET request with index  and parse output xml data", function(done){
       var span = nock("https://api.inetwork.com").get("/v1.0/test/10")
-        .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>test1</Test><Test>test2</Test></Response>", {"Content-Type": "application/xml"});
+        .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>test1</Test><Test>test2</Test><Test>1234567890</Test></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("get", "/test", null, "10", function(err, r){
         if(err){
           return done(err);
         }
-        r.test.should.eql(["test1", "test2"]);
+        r.test.should.eql(["test1", "test2", "1234567890"]);
         done();
       });
     });
     it("should make POST request and parse output xml data", function(done){
-      var span = nock("https://api.inetwork.com").post("/v1.0/test", "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<Root>\n  <Test1>test1</Test1>\n  <Test1>test2</Test1>\n</Root>")
+      var span = nock("https://api.inetwork.com").post("/v1.0/test", "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<Root>\n  <Test1>test1</Test1>\n  <Test1>test2</Test1>\n  <el>2014-11-20T00:00:00.000Z</el>\n</Root>")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>2014-11-19T13:44:38.123Z</Test></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("post", "/test", {
         root: {
-          test1: ["test1", "test2"]
+          test1: ["test1", "test2"],
+          test2: new Date("2014-11-20T00:00:00.000Z"),
+          _test2XmlElement: "el"
         }
       }, function(err, r){
         if(err){
@@ -192,6 +210,13 @@ describe("client tests", function(){
         param2: "test",
         param3: true
       }, done);
+    });
+  });
+  describe("#concatAccountPath", function(){
+    it("should return formatted url", function(){
+      var client = new Client("accountId");
+      client.concatAccountPath("test").should.equal("/accounts/accountId/test");
+      client.concatAccountPath("/test1").should.equal("/accounts/accountId/test1");
     });
   });
 });
