@@ -1,4 +1,4 @@
-var Client = require("../lib/client");
+var Client = require("../lib/").Client;
 var nock = require("nock");
 describe("client tests", function(){
   before(function(){
