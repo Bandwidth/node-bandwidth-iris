@@ -202,7 +202,7 @@ describe("client tests", function(){
         done();
       });
     });
-    it("should not fail if resultCode == 0e", function(done){
+    it("should not fail if resultCode == 0", function(done){
       var span = nock("https://api.inetwork.com").get("/v1.0/test?param1=1&param2=test&param3=true")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test><resultCode>0</resultCode><resultMessage>Completed</resultMessage></Test></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("get", "/test", {
@@ -217,6 +217,31 @@ describe("client tests", function(){
       var client = new Client("accountId");
       client.concatAccountPath("test").should.equal("/accounts/accountId/test");
       client.concatAccountPath("/test1").should.equal("/accounts/accountId/test1");
+    });
+  });
+  describe("#getIdFromLocationHeader", function(){
+    it("should return formatted url", function(done){
+      Client.getIdFromLocationHeader("/path1/path2/10", function(err, id){
+        if(err){
+          return done(err);
+        }
+        id.should.equal("10");
+        Client.getIdFromLocationHeader("/path1/100/path2/11", function(err, id){
+          if(err){
+            return done(err);
+          }
+          id.should.equal("11");
+          done();
+        });
+      });
+    });
+    it("should fail if id is missing", function(done){
+      Client.getIdFromLocationHeader("nothing", function(err, id){
+        if(err){
+          return done();
+        }
+        done(new Error("Error is estimated"));
+      });
     });
   });
 });
