@@ -6,7 +6,7 @@ var SipPeer = lib.SipPeer;
 describe("SipPeer", function(){
   before(function(){
     nock.disableNetConnect();
-    helper.setupEnvironmentVariables();
+    helper.setupGlobalOptions();
   });
   after(function(){
     nock.cleanAll();

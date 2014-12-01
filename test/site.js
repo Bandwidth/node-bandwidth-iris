@@ -6,7 +6,7 @@ var Site = lib.Site;
 describe("Site", function(){
   before(function(){
     nock.disableNetConnect();
-    helper.setupEnvironmentVariables();
+    helper.setupGlobalOptions();
   });
   after(function(){
     nock.cleanAll();

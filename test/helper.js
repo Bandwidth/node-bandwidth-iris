@@ -2,10 +2,10 @@ var Client = require("../").Client;
 var nock = require("nock");
 var xml = require("./xml");
 module.exports = {
-  setupEnvironmentVariables: function(){
-    process.env.BANDWIDTH_API_ACCOUNT_ID = "FakeAccountId";
-    process.env.BANDWIDTH_API_USERNAME = "FakeUserName";
-    process.env.BANDWIDTH_API_PASSWORD = "FakePassword";
+  setupGlobalOptions: function(){
+    Client.globalOptions.accountId = "FakeAccountId";
+    Client.globalOptions.userName = "FakeUserName";
+    Client.globalOptions.password = "FakePassword";
   },
 
   createClient: function(){
