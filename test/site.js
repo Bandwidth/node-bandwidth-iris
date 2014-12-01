@@ -1,4 +1,4 @@
-var lib = require("../lib");
+var lib = require("../");
 var helper = require("./helper");
 var nock = require("nock");
 var Site = lib.Site;
