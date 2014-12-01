@@ -29,6 +29,22 @@ describe("client tests", function(){
       });
     });
 
+    it("should make GET request and parse output xml data (another way of creation of client)", function(done){
+      var c = new Client({
+        accountId: "accountId",
+        userName: "user",
+        password: "password"
+      });
+      var span = nock("https://api.inetwork.com").get("/v1.0/test")
+        .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>test</Test></Response>", {"Content-Type": "application/xml"});
+      c.makeRequest("get", "/test", function(err, r){
+        if(err){
+          return done(err);
+        }
+        r.test.should.equal("test");
+        done();
+      });
+    });
     it("should make GET request and handle requests without output", function(done){
       var span = nock("https://api.inetwork.com").get("/v1.0/test")
         .reply(200);
@@ -214,7 +230,7 @@ describe("client tests", function(){
   });
   describe("#concatAccountPath", function(){
     it("should return formatted url", function(){
-      var client = new Client("accountId");
+      var client = new Client({accountId: "accountId"});
       client.concatAccountPath("test").should.equal("/accounts/accountId/test");
       client.concatAccountPath("/test1").should.equal("/accounts/accountId/test1");
     });
