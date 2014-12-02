@@ -142,7 +142,7 @@ describe("SipPeer", function(){
     });
 
     it("should return a number", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10/tns/12345").reply(200, helper.xml.tn, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10/tns/12345").reply(200, helper.xml.sipPeerTn, {"Content-Type": "application/xml"});
       var peer = new SipPeer();
       peer.id = 10;
       peer.siteId = 1;
