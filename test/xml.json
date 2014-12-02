@@ -10,5 +10,6 @@
   "tn": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><TelephoneNumberResponse><TelephoneNumber>1234</TelephoneNumber><Status>Inservice</Status><LastModifiedDate>2014-05-09T21:12:03.000Z</LastModifiedDate><OrderCreateDate>2014-05-09T21:12:03.835Z</OrderCreateDate><OrderId>5f3a4dab-aac7-4b0a-8ee4-1b6a67ae04be</OrderId><OrderType>NEW_NUMBER_ORDER</OrderType><SiteId>1091</SiteId><AccountId>9500149</AccountId></TelephoneNumberResponse>",
   "tnSites": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Site><Id>1435</Id><Name>Sales Training</Name></Site>",
   "tnSipPeers": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><SipPeer><Id>4064</Id><Name>Sales</Name></SipPeer>",
-  "tnRateCenter": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><TelephoneNumberResponse><TelephoneNumberDetails><State>CO</State><RateCenter>DENVER</RateCenter></TelephoneNumberDetails></TelephoneNumberResponse>"
+  "tnRateCenter": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><TelephoneNumberResponse><TelephoneNumberDetails><State>CO</State><RateCenter>DENVER</RateCenter></TelephoneNumberDetails></TelephoneNumberResponse>",
+  "tnReservation": "<?xml version=\"1.0\" encoding=\"utf-8\"?><ReservationResponse><Reservation><Id>1</Id><ReservationId>1</ReservationId><AccountId>111</AccountId><ReservationExpires>0</ReservationExpires><ReservedTn>000</ReservedTn></Reservation></ReservationResponse>"
 }
