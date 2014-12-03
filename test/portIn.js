@@ -158,6 +158,34 @@ describe("PortIn", function(){
         done();
       });
     });
+    it("should fail on loading notes error", function(done){
+      var data = {userId: "customer", description: "Test"};
+      helper.nock().post("/v1.0/accounts/FakeAccountId/portins/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/v1.0/accounts/FakeAccountId/portins/1/notes/11299"});
+      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/notes").reply(500);
+      var order = new PortIn();
+      order.id = 1;
+      order.client = helper.createClient();
+      order.addNote(data, function(err, note){
+        if(err){
+          return done();
+        }
+        done(new Error("An error is estimated"));
+      });
+    });
+    it("should fail on error status code", function(done){
+      var data = {userId: "customer", description: "Test"};
+      helper.nock().post("/v1.0/accounts/FakeAccountId/portins/1/notes", helper.buildXml({note: data})).reply(400);
+      var order = new PortIn();
+      order.id = 1;
+      order.client = helper.createClient();
+      debugger;
+      order.addNote(data, function(err, note){
+        if(err){
+          return done();
+        }
+        done(new Error("An error is estimated"));
+      });
+    });
   });
   describe("#getFiles", function(){
     it("should return list of files", function(done){
