@@ -1,6 +1,9 @@
 var lib = require("../");
 var helper = require("./helper");
 var nock = require("nock");
+var os = require("os");
+var path = require("path");
+var fs = require("fs");
 var PortIn = lib.PortIn;
 
 describe("PortIn", function(){
@@ -154,6 +157,219 @@ describe("PortIn", function(){
         note.description.should.equal("Test");
         done();
       });
+    });
+  });
+  describe("#getFiles", function(){
+    it("should return list of files", function(done){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/loas?metadata=true").reply(200, helper.xml.files, {"Content-Type": "application/xml"});
+      var order = new PortIn();
+      order.id = 1;
+      order.client = helper.createClient();
+      order.getFiles(true, function(err, items){
+        if(err){
+          return done(err);
+        }
+        items.length.should.equal(6);
+        items[0].fileName.should.equal("d28b36f7-fa96-49eb-9556-a40fca49f7c6-1416231534986.txt");
+        items[0].fileMetaData.documentType.should.equal("LOA");
+        done();
+      });
+    });
+    it("should return list of files (without metadata)", function(done){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/loas?metadata=false").reply(200, helper.xml.files, {"Content-Type": "application/xml"});
+      var order = new PortIn();
+      order.id = 1;
+      order.client = helper.createClient();
+      order.getFiles(function(err, items){
+        if(err){
+          return done(err);
+        }
+        items.length.should.equal(6);
+        items[0].fileName.should.equal("d28b36f7-fa96-49eb-9556-a40fca49f7c6-1416231534986.txt");
+        done();
+      });
+    });
+    it("should fail for error status code", function(done){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/loas?metadata=false").reply(400);
+      var order = new PortIn();
+      order.id = 1;
+      order.client = helper.createClient();
+      order.getFiles(function(err, items){
+        if(err){
+          return done();
+        }
+        done(new Error("An error is estimated"));
+      });
+    });
+  });
+  describe("#getFileMetadata", function(){
+    it("should return file's metadata", function(done){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/loas/file.txt/metadata").reply(200, helper.xml.fileMetadata, {"Content-Type": "application/xml"});
+      var order = new PortIn();
+      order.id = 1;
+      order.client = helper.createClient();
+      order.getFileMetadata("file.txt", function(err, meta){
+        if(err){
+          return done(err);
+        }
+        meta.documentType.should.equal("LOA");
+        done();
+      });
+    });
+  });
+  describe("#getFile", function(){
+    var tmpFile = path.join(os.tmpdir(), "dest.txt");
+    beforeEach(function(){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/loas/file.txt").reply(200, "12345", {"Content-Type": "text/plain"});
+    });
+    afterEach(function(done){
+      nock.cleanAll();
+      fs.unlink(tmpFile, done);
+    });
+    it("should download file to destination file", function(done){
+      var order = new PortIn();
+      order.id = 1;
+      order.client = helper.createClient();
+      var stream = order.getFile("file.txt", tmpFile);
+      stream.on("finish", function(){
+        fs.readFile(tmpFile, "utf8", function(err, text){
+          if(err){
+            done(err);
+          }
+          text.should.equal("12345");
+          done();
+        });
+      });
+    });
+    it("should download file to destination stream", function(done){
+      var order = new PortIn();
+      order.id = 1;
+      order.client = helper.createClient();
+      var stream = order.getFile("file.txt", fs.createWriteStream(tmpFile));
+      stream.on("finish", function(){
+        fs.readFile(tmpFile, "utf8", function(err, text){
+          if(err){
+            done(err);
+          }
+          text.should.equal("12345");
+          done();
+        });
+      });
+    });
+    it("should allow control download process", function(done){
+      var order = new PortIn();
+      order.id = 1;
+      order.client = helper.createClient();
+      var stream = order.getFile("file.txt").pipe(fs.createWriteStream(tmpFile));
+      stream.on("finish", function(){
+        fs.readFile(tmpFile, "utf8", function(err, text){
+          if(err){
+            done(err);
+          }
+          text.should.equal("12345");
+          done();
+        });
+      });
+    });
+  });
+  describe("#createFile", function(){
+    var order, tmpFile = path.join(os.tmpdir(), "dest.txt");
+    beforeEach(function(done){
+      helper.nock().post("/v1.0/accounts/FakeAccountId/portins/1/loas", "12345", {"Content-Type": "text/plain"}).reply(200, helper.xml.fileCreated, {"Content-Type": "application/xml"});
+      order = new PortIn();
+      order.id = 1;
+      order.client = helper.createClient();
+      fs.writeFile(tmpFile, "12345", "utf8", done);
+    });
+    afterEach(function(done){
+      nock.cleanAll();
+      fs.unlink(tmpFile, done);
+    });
+    it("should upload file to the server (via buffer)", function(done){
+      order.createFile(new Buffer("12345", "utf8"), "text/plain", function(err, fileName){
+        if(err){
+          return done(err);
+        }
+        fileName.should.equal("test.txt");
+        done();
+      });
+    });
+    it("should upload file to the server (via file path)", function(done){
+      order.createFile(tmpFile, "text/plain", function(err, fileName){
+        if(err){
+          return done(err);
+        }
+        fileName.should.equal("test.txt");
+        done();
+      });
+    });
+    it("should upload file to the server (via stream)", function(done){
+      order.createFile(fs.createReadStream(tmpFile), "text/plain", function(err, fileName){
+        if(err){
+          return done(err);
+        }
+        fileName.should.equal("test.txt");
+        done();
+      });
+    });
+    it("should fail on error status code", function(done){
+      nock.cleanAll();
+      helper.nock().post("/v1.0/accounts/FakeAccountId/portins/1/loas", "11111", {"Content-Type": "text/plain"}).reply(400);
+      order.createFile(new Buffer("11111", "utf8"), "text/plain", function(err, fileName){
+        if(err){
+          return done();
+        }
+        done(new Error("An error is estimated"));
+      });
+    });
+    it("should upload file to the server (default media type)", function(done){
+      nock.cleanAll();
+      helper.nock().post("/v1.0/accounts/FakeAccountId/portins/1/loas", "12345", {"Content-Type": "application/octet-stream"}).reply(200, helper.xml.fileCreated, {"Content-Type": "application/xml"});
+      order.createFile(new Buffer("12345", "utf8"), function(err, fileName){
+        if(err){
+          return done(err);
+        }
+        fileName.should.equal("test.txt");
+        done();
+      });
+    });
+  });
+  describe("#updateFile", function(){
+    var order, tmpFile = path.join(os.tmpdir(), "dest.txt");
+    beforeEach(function(done){
+      helper.nock().put("/v1.0/accounts/FakeAccountId/portins/1/loas/test.txt", "12345", {"Content-Type": "text/plain"}).reply(200);
+      order = new PortIn();
+      order.id = 1;
+      order.client = helper.createClient();
+      fs.writeFile(tmpFile, "12345", "utf8", done);
+    });
+    afterEach(function(done){
+      nock.cleanAll();
+      fs.unlink(tmpFile, done);
+    });
+    it("should upload file to the server (via buffer)", function(done){
+      order.updateFile("test.txt", new Buffer("12345", "utf8"), "text/plain", done);
+    });
+    it("should upload file to the server (via file path)", function(done){
+      order.updateFile("test.txt", tmpFile, "text/plain", done);
+    });
+    it("should upload file to the server (via stream)", function(done){
+      order.updateFile("test.txt", fs.createReadStream(tmpFile), "text/plain", done);
+    });
+    it("should fail on error status code", function(done){
+      nock.cleanAll();
+      helper.nock().put("/v1.0/accounts/FakeAccountId/portins/1/loas/test.txt", "11111", {"Content-Type": "text/plain"}).reply(400);
+      order.updateFile("test.txt", new Buffer("11111", "utf8"), "text/plain", function(err){
+        if(err){
+          return done();
+        }
+        done(new Error("An error is estimated"));
+      });
+    });
+    it("should upload file to the server (default media type)", function(done){
+      nock.cleanAll();
+      helper.nock().put("/v1.0/accounts/FakeAccountId/portins/1/loas/test.txt", "12345", {"Content-Type": "application/octet-stream"}).reply(200, helper.xml.fileCreated, {"Content-Type": "application/xml"});
+      order.updateFile("test.txt", new Buffer("12345", "utf8"), done);
     });
   });
 });
