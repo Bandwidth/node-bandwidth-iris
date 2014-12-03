@@ -4,9 +4,9 @@ var nock = require("nock");
 var os = require("os");
 var path = require("path");
 var fs = require("fs");
-var PortOut = lib.PortOut;
+var ImportToAccount = lib.ImportToAccount;
 
-describe("PortOut", function(){
+describe("ImportToAccount", function(){
   before(function(){
     nock.disableNetConnect();
     helper.setupGlobalOptions();
@@ -17,8 +17,8 @@ describe("PortOut", function(){
   });
   describe("#getNotes", function(){
     it("should return notes", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portouts/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
-      var order = new PortOut();
+      helper.nock().get("/v1.0/accounts/FakeAccountId/importToAccounts/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
+      var order = new ImportToAccount();
       order.id = 1;
       order.client = helper.createClient();
       order.getNotes(function(err, notes){
@@ -33,8 +33,8 @@ describe("PortOut", function(){
       });
     });
     it("should fail for error status code", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portouts/1/notes").reply(400);
-      var order = new PortOut();
+      helper.nock().get("/v1.0/accounts/FakeAccountId/importToAccounts/1/notes").reply(400);
+      var order = new ImportToAccount();
       order.id = 1;
       order.client = helper.createClient();
       order.getNotes(function(err, notes){
@@ -48,9 +48,9 @@ describe("PortOut", function(){
   describe("#addNote", function(){
     it("should add new note", function(done){
       var data = {userId: "customer", description: "Test"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/portouts/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/v1.0/accounts/FakeAccountId/portins/1/notes/11299"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portouts/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
-      var order = new PortOut();
+      helper.nock().post("/v1.0/accounts/FakeAccountId/importToAccounts/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/v1.0/accounts/FakeAccountId/portins/1/notes/11299"});
+      helper.nock().get("/v1.0/accounts/FakeAccountId/importToAccounts/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
+      var order = new ImportToAccount();
       order.id = 1;
       order.client = helper.createClient();
       order.addNote(data, function(err, note){
@@ -65,9 +65,9 @@ describe("PortOut", function(){
     });
     it("should fail on loading notes error", function(done){
       var data = {userId: "customer", description: "Test"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/portouts/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/v1.0/accounts/FakeAccountId/portins/1/notes/11299"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portouts/1/notes").reply(500);
-      var order = new PortOut();
+      helper.nock().post("/v1.0/accounts/FakeAccountId/importToAccounts/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/v1.0/accounts/FakeAccountId/portins/1/notes/11299"});
+      helper.nock().get("/v1.0/accounts/FakeAccountId/importToAccounts/1/notes").reply(500);
+      var order = new ImportToAccount();
       order.id = 1;
       order.client = helper.createClient();
       order.addNote(data, function(err, note){
@@ -79,8 +79,8 @@ describe("PortOut", function(){
     });
     it("should fail on error status code", function(done){
       var data = {userId: "customer", description: "Test"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/portouts/1/notes", helper.buildXml({note: data})).reply(400);
-      var order = new PortOut();
+      helper.nock().post("/v1.0/accounts/FakeAccountId/importToAccounts/1/notes", helper.buildXml({note: data})).reply(400);
+      var order = new ImportToAccount();
       order.id = 1;
       order.client = helper.createClient();
       debugger;
