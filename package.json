@@ -1,5 +1,5 @@
 {
-  "name": "node-bandwidth-iris",
+  "name": "bandwidth-iris",
   "version": "0.0.1",
   "description": "NodeJs Client library for IRIS / BBS API",
   "main": "index.js",
