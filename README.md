@@ -37,4 +37,6 @@ iris.Site.list(function(err, sites){
 
 ```
 
+Read IRIS / BBS Api documentation for more details
+
 
