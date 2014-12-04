@@ -218,6 +218,22 @@ describe("client tests", function(){
         done();
       });
     });
+    it("should fail if output contains elements resultCode and resultMessage (more deep)", function(done){
+      var span = nock("https://api.inetwork.com").get("/v1.0/test?param1=1&param2=test&param3=true")
+        .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Tests><Test></Test><Test><resultCode>400</resultCode><resultMessage>Error</resultMessage></Test></Tests></Response>", {"Content-Type": "application/xml"});
+      client.makeRequest("get", "/test", {
+        param1: 1,
+        param2: "test",
+        param3: true
+      }, function(err){
+        if(!err){
+          return done(new Error("Error has been expected"));
+        }
+        err.message.should.equal("Error");
+        err.code.should.equal(400);
+        done();
+      });
+    });
     it("should not fail if resultCode == 0", function(done){
       var span = nock("https://api.inetwork.com").get("/v1.0/test?param1=1&param2=test&param3=true")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test><resultCode>0</resultCode><resultMessage>Completed</resultMessage></Test></Response>", {"Content-Type": "application/xml"});

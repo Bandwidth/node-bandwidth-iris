@@ -102,6 +102,30 @@ describe("Order", function(){
         done();
       });
     });
+    it("should get an order (with default client)", function(done){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/orders/101").reply(200, helper.xml.order);
+      Order.get("101", function(err, item){
+        if(err){
+          return done(err);
+        }
+        var order = item.order;
+        order.id.should.equal(101);
+        order.name.should.equal("Test");
+        done();
+      });
+    });
+    it("should get an order (with default client)", function(done){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/orders/101").reply(200, helper.xml.order);
+      Order.get(helper.createClient(), "101", function(err, item){
+        if(err){
+          return done(err);
+        }
+        var order = item.order;
+        order.id.should.equal(101);
+        order.name.should.equal("Test");
+        done();
+      });
+    });
     it("should fail on error status code", function(done){
       helper.nock().get("/v1.0/accounts/FakeAccountId/orders/101").reply(400, "");
       Order.get(helper.createClient(), "101", function(err, item){

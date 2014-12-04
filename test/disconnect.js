@@ -74,6 +74,20 @@ describe("Disconnect", function(){
         done(new Error("An error is estimated"));
       });
     });
+    it("should fail if location header is missing", function(done){
+      var data = {userId: "customer", description: "Test"};
+      helper.nock().post("/v1.0/accounts/FakeAccountId/disconnects/1/notes", helper.buildXml({note: data})).reply(400);
+      var order = new Disconnect();
+      order.id = 1;
+      order.client = helper.createClient();
+      debugger;
+      order.addNote(data, function(err, note){
+        if(err){
+          return done();
+        }
+        done(new Error("An error is estimated"));
+      });
+    });
     it("should fail on error status code", function(done){
       var data = {userId: "customer", description: "Test"};
       helper.nock().post("/v1.0/accounts/FakeAccountId/disconnects/1/notes", helper.buildXml({note: data})).reply(400);
@@ -101,6 +115,19 @@ describe("Disconnect", function(){
       };
       helper.nock().post("/v1.0/accounts/FakeAccountId/disconnects", helper.buildXml(data)).reply(200);
       Disconnect.disconnectNumbers(helper.createClient(), "test", ["111", "222"], done);
+    });
+    it("should disconnect numbers (with default client)", function(done){
+      var data = {
+        disconnectTelephoneNumberOrder: {
+          name: "test",
+          _nameXmlElement: "name",
+         disconnectTelephoneNumberOrderType: {
+          telephoneNumber: ["111", "222"]
+         }
+        }
+      };
+      helper.nock().post("/v1.0/accounts/FakeAccountId/disconnects", helper.buildXml(data)).reply(200);
+      Disconnect.disconnectNumbers("test", ["111", "222"], done);
     });
   });
 });

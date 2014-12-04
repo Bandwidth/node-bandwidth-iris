@@ -27,6 +27,19 @@ describe("RateCenter", function(){
         done();
       });
     });
+    it("should return list of rateCenters (with 1 item)", function(done){
+      var span = helper.nock().get("/v1.0/rateCenters").reply(200, helper.xml.rateCenters1, {"Content-Type": "application/xml"});
+      RateCenter.list(helper.createClient(), function(err, list){
+        if(err){
+          return done(err);
+        }
+        span.isDone().should.be.true;
+        list.length.should.equal(1);
+        list[0].name.should.equal("ACME");
+        list[0].abbreviation.should.equal("ACME");
+        done();
+      });
+    });
     it("should return list of rateCenters (with default client)", function(done){
       var span = helper.nock().get("/v1.0/rateCenters").reply(200, helper.xml.rateCenters, {"Content-Type": "application/xml"});
       RateCenter.list(function(err, list){
