@@ -20,7 +20,7 @@ describe("Site", function(){
           return done(err);
         }
         span.isDone().should.be.true;
-        list.length.should.equal(1);
+        list.length.should.equal(2);
         list[0].id.should.equal(1);
         list[0].name.should.equal("Test Site");
         list[0].description.should.equal("A site description");
@@ -34,7 +34,7 @@ describe("Site", function(){
           return done(err);
         }
         span.isDone().should.be.true;
-        list.length.should.equal(1);
+        list.length.should.equal(2);
         list[0].id.should.equal(1);
         list[0].name.should.equal("Test Site");
         list[0].description.should.equal("A site description");
