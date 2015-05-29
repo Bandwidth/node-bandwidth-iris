@@ -7,12 +7,12 @@ iris.Client.globalOptions.userName = config.userName;
 iris.Client.globalOptions.password = config.password;
 
 if(process.argv.length < 3){
-  console.log("usage: node coveredRateCenters [zip] e.g. node rateCenters 27609");
+  console.log("usage: node rateCenters [stateAbbreviation] e.g. node rateCenters NC");
   process.exit(1);
 }
 
-var zip = process.argv[2];
-iris.CoveredRateCenter.list({"zip":zip}, function(err,list){
-  console.log("There are " + list.length + " covered rate centers for " + zip);
-  console.log("First in list: " + JSON.stringify(list[0]));
+var state = process.argv[2];
+iris.RateCenter.list({"available":true, "state":state}, function(err,list){
+  console.log("There are " + list.length + " rate centers for " + state);
+  console.log("First is: " + JSON.stringify(list[0]));
 });
