@@ -54,7 +54,7 @@ nbproject
 Thumbs.db
 
 # config files
-
+/examples/config.js
 /config/*.yml
 /config/*.json
 
