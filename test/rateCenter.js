@@ -14,8 +14,8 @@ describe("RateCenter", function(){
   });
   describe("#list", function(){
     it("should return list of rateCenters", function(done){
-      var span = helper.nock().get("/v1.0/rateCenters").reply(200, helper.xml.rateCenters, {"Content-Type": "application/xml"});
-      RateCenter.list(helper.createClient(), function(err, list){
+      var span = helper.nock().get("/v1.0/rateCenters?available=true&state=NC").reply(200, helper.xml.rateCenters, {"Content-Type": "application/xml"});
+      RateCenter.list(helper.createClient(), {available:true, state:"NC"}, function(err, list){
         if(err){
           return done(err);
         }
@@ -23,13 +23,12 @@ describe("RateCenter", function(){
         list.length.should.equal(3);
         list[0].name.should.equal("ACME");
         list[0].abbreviation.should.equal("ACME");
-        new RateCenter();
         done();
       });
     });
     it("should return list of rateCenters (with 1 item)", function(done){
-      var span = helper.nock().get("/v1.0/rateCenters").reply(200, helper.xml.rateCenters1, {"Content-Type": "application/xml"});
-      RateCenter.list(helper.createClient(), function(err, list){
+      var span = helper.nock().get("/v1.0/rateCenters?available=true&state=NC").reply(200, helper.xml.rateCenters1, {"Content-Type": "application/xml"});
+      RateCenter.list(helper.createClient(), {available:true, state:"NC"}, function(err, list){
         if(err){
           return done(err);
         }
@@ -41,8 +40,8 @@ describe("RateCenter", function(){
       });
     });
     it("should return list of rateCenters (with default client)", function(done){
-      var span = helper.nock().get("/v1.0/rateCenters").reply(200, helper.xml.rateCenters, {"Content-Type": "application/xml"});
-      RateCenter.list(function(err, list){
+      var span = helper.nock().get("/v1.0/rateCenters?available=true&state=NC").reply(200, helper.xml.rateCenters, {"Content-Type": "application/xml"});
+      RateCenter.list({available:true, state:"NC"}, function(err, list){
         if(err){
           return done(err);
         }
@@ -55,8 +54,8 @@ describe("RateCenter", function(){
     });
 
     it("should fail for error status code", function(done){
-      helper.nock().get("/v1.0/rateCenters").reply(400);
-      RateCenter.list(helper.createClient(), function(err, list){
+      helper.nock().get("/v1.0/rateCenters?available=true&state=NC").reply(400);
+      RateCenter.list(helper.createClient(), {available:true, state:"NC"}, function(err, list){
         if(err){
           return done();
         }

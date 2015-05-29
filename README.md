@@ -34,6 +34,21 @@ iris.Site.list(function(err, sites){
 
 ```
 
+## Examples
+There is an 'examples' folder in the source tree that shows how each of the API objects work with simple example code.  To run the examples:
+
+```bash
+$ cd examples
+$ cp config.js.example config.js
+```
+Edit the config.js to match your IRIS credentials and run the examples individually.  e.g.
+
+```bash
+node coveredRateCenters
+```
+If the examples take command line parameters, you will get the usage by just executing the individual script.
+
+
 ## API Objects 
 ### General principles
 When fetching objects from the API, it will always return an object that has the client
