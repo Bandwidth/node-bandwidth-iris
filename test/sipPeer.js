@@ -125,7 +125,7 @@ describe("SipPeer", function(){
   });
   describe("#getTns", function(){
     it("should return list of numbers", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10/tns").reply(200, helper.xml.tns, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10/tns").reply(200, helper.xml.sipPeerTns, {"Content-Type": "application/xml"});
       var peer = new SipPeer();
       peer.id = 10;
       peer.siteId = 1;

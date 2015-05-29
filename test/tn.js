@@ -50,6 +50,34 @@ describe("Tn", function(){
       });
     });
   });
+  describe("#list", function() {
+    it("should return a list", function(done){
+      var span = helper.nock().get("/v1.0/tns?city=CARY").reply(200, helper.xml.tns, {"Content-Type": "application/xml"});
+      Tn.list({city:"CARY"}, function(err, res){
+        span.isDone().should.be.true;
+        res.telephoneNumbers.should.be.ok;
+        res.telephoneNumbers.telephoneNumber.length.should.eql(2);
+        res.links.should.be.ok;
+        done();
+      });
+    });
+  });
+  describe("#getTnDetails", function(){
+    it("should return tn details", function(done){
+      var span = helper.nock().get("/v1.0/tns/2018981023/tndetails").reply(200, helper.xml.tnDetails, {"Content-Type": "application/xml"});
+      var tn = new Tn();
+      tn.client = helper.createClient();
+      tn.telephoneNumber = "2018981023";
+      tn.getTnDetails(function(err,item){
+        if(err){
+          return done(err);
+        }
+        span.isDone().should.be.true;
+        item.fullNumber.should.eql(tn.telephoneNumber);
+        done();
+      });
+    });
+  });
   describe("#getSites", function(){
     it("should return sites", function(done){
       var span = helper.nock().get("/v1.0/tns/1234/sites").reply(200, helper.xml.tnSites, {"Content-Type": "application/xml"});
