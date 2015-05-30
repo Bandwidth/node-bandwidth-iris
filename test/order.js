@@ -149,6 +149,85 @@ describe("Order", function(){
       order.update(data, done);
     });
   });
+  describe("#getAreaCodes", function(){
+    it("should return areaCodes", function(done){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/orders/1/areaCodes").reply(200, helper.xml.orderAreaCodes, {"Content-Type": "application/xml"});
+      var order = new Order();
+      order.id = 1;
+      order.client = helper.createClient();
+      order.getAreaCodes(function(err, areaCodes){
+        if(err){
+          return done(err);
+        }
+        areaCodes.length.should.equal(1);
+        done();
+      });
+    });
+  });
+  describe("#getNpaNxx", function(){
+    it("should return npaNxx", function(done){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/orders/1/npaNxx").reply(200, helper.xml.orderNpaNxx, {"Content-Type": "application/xml"});
+      var order = new Order();
+      order.id = 1;
+      order.client = helper.createClient();
+      order.getNpaNxx(function(err, npaNxxs){
+        if(err){
+          return done(err);
+        }
+        npaNxxs.length.should.equal(1);
+        npaNxxs[0].count.should.eql(1);
+        done();
+      });
+    });
+  });
+  describe("#getTotals", function(){
+    it("should return totals", function(done){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/orders/1/totals").reply(200, helper.xml.orderTotals, {"Content-Type": "application/xml"});
+      var order = new Order();
+      order.id = 1;
+      order.client = helper.createClient();
+      order.getTotals(function(err, totals){
+        if(err){
+          return done(err);
+        }
+        totals.length.should.equal(1);
+        totals[0].count.should.eql(1);
+        done();
+      });
+    });
+  });
+  describe("#getTns", function(){
+    it("should return tns", function(done){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/orders/1/tns").reply(200, helper.xml.orderTns, {"Content-Type": "application/xml"});
+      var order = new Order();
+      order.id = 1;
+      order.client = helper.createClient();
+      order.getTns(function(err, tns){
+        if(err){
+          return done(err);
+        }
+        tns.count.should.eql(2);
+        tns.telephoneNumber.length.should.eql(2);
+        tns.telephoneNumber[0].should.eql("8042105666");
+        done();
+      });
+    });
+  });
+  describe("#getHistory", function(){
+    it("should return history", function(done){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/orders/1/history").reply(200, helper.xml.orderHistory, {"Content-Type": "application/xml"});
+      var order = new Order();
+      order.id = 1;
+      order.client = helper.createClient();
+      order.getHistory(function(err, history){
+        if(err){
+          return done(err);
+        }
+        history.length.should.eql(2);
+        done();
+      });
+    });
+  });
   describe("#getNotes", function(){
     it("should return notes", function(done){
       helper.nock().get("/v1.0/accounts/FakeAccountId/orders/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
