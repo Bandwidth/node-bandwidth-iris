@@ -114,7 +114,7 @@ describe("Disconnect", function(){
         }
       };
       helper.nock().post("/v1.0/accounts/FakeAccountId/disconnects", helper.buildXml(data)).reply(200);
-      Disconnect.disconnectNumbers(helper.createClient(), "test", ["111", "222"], done);
+      Disconnect.create(helper.createClient(), "test", ["111", "222"], done);
     });
     it("should disconnect numbers (with default client)", function(done){
       var data = {
@@ -127,7 +127,7 @@ describe("Disconnect", function(){
         }
       };
       helper.nock().post("/v1.0/accounts/FakeAccountId/disconnects", helper.buildXml(data)).reply(200);
-      Disconnect.disconnectNumbers("test", ["111", "222"], done);
+      Disconnect.create("test", ["111", "222"], done);
     });
   });
 });
