@@ -13,6 +13,5 @@ if(process.argv.length < 3){
 
 var zip = process.argv[2];
 iris.CoveredRateCenter.list({"zip":zip}, function(err,list){
-  console.log("There are " + list.length + " covered rate centers for " + zip);
-  console.log("First in list: " + JSON.stringify(list[0]));
+  console.log("First in list: " + JSON.stringify(list, null, 2));
 });

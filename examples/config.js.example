@@ -2,5 +2,6 @@ module.exports = {
   "apiEndPoint":"https://api.inetwork.com",
   "accountId":"",
   "userName":"",
-  "password":""
+  "password":"",
+  "selectedSiteId":""
 };

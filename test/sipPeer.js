@@ -193,4 +193,38 @@ describe("SipPeer", function(){
       peer.moveTns(data, done);
     });
   });
+  describe("#serialization tests", function(){
+    it("should serialize properly", function(done){
+      var data = {
+        peerName:"A New SIP Peer",
+        isDefaultPeer:false, 
+        shortMessagingProtocol:"SMPP",
+        siteId:2297, 
+        voiceHosts:[
+          {
+            host:{
+              hostName:"1.1.1.1"
+            }
+          }
+        ],
+        smsHosts:[
+          {
+            host:{
+              hostName:"1.1.1.1"
+            }
+          }
+        ],
+        terminationHosts:[
+          {
+            terminationHost:{
+              hostName:"1.1.1.1",
+              port:5060,
+            }
+          }
+        ]
+      };
+      console.log(helper.buildXml({sipPeer:data}));
+      done();
+    });
+  });
 });

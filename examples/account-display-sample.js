@@ -10,6 +10,6 @@ iris.Account.get(function(err,account){
   if(err){
     console.log(err);
   }else {
-    console.log("Your account Id: " + account.accountId);
+    console.log("Account Details: " + JSON.stringify(account,null,2));
   }
 });
