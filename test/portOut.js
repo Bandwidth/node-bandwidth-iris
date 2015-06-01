@@ -15,6 +15,26 @@ describe("PortOut", function(){
     nock.cleanAll();
     nock.enableNetConnect();
   });
+  describe("#list", function(){
+    it("should return a list ", function(done){
+      //don't have valid return types yet for this
+      done();
+    });
+  });
+  describe("#get", function(){
+    it("should get PortOut successfully", function(done){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/portouts/1").reply(200, helper.xml.portOut, {"Content-Type": "application/xml"});
+      PortOut.get(helper.createClient(), "1", function(err, portOut){
+        if(err){
+          return done(err);
+        }
+        portOut.should.be.ok;
+        portOut.userId.should.eql("System");
+        portOut.portOutStatus.should.eql("NEW");
+        done();
+      });
+    });
+  });
   describe("#getNotes", function(){
     it("should return notes", function(done){
       helper.nock().get("/v1.0/accounts/FakeAccountId/portouts/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
