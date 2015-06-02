@@ -72,47 +72,28 @@ case by the internals of the API when converted to XML.
 
 ## Available Numbers
 ```Javascript
-iris.AvailableNumbers.list({options}, callback);
-
-Example:
-iris.AvailableNumbers.list({areaCode:"818", quantity:5, enableTNDetail:true}, function(err,res){
-  console.log(res.telephoneNumberDetailList.telephoneNumberDetail[0].fullNumber);  
-});
-
+iris.AvailableNumbers.list(query, callback);
 ```
 
 ## Available NpaNxx
 ```Javascript
-iris.AvailableNpaNxx.list({areaCode:"818", quantity:5}, function(err, res){
-  if(err){
-    console.log(err);
-  } else {
-    console.log("Available NpaNxx: " + JSON.stringify(res,null, 2));
-  }
-});
+iris.AvailableNpaNxx.list({areaCode:"818", quantity:5}, callback);
 ```
 
 ## Cities
 ```Javascript
-iris.City.list({"available":true, "state":"CA"}, function(err,list){
-  console.log("Cities for selected state: " + JSON.stringify(list, null, 2));
-});
+iris.City.list({"available":true, "state":"CA"}, callback);
 ```
 
 ## Covered Rate Centers
 ```Javascript
-var zip = process.argv[2];
-iris.CoveredRateCenter.list({"zip":"27601"}, function(err,list){
-  console.log("Covered Rate Centers: " + JSON.stringify(list, null, 2));
-});
+iris.CoveredRateCenter.list({"zip":"27601"}, callback);
 ```
 
 ## Disconnected Numbers
 Retrieves a list of disconnected numbers for an account
 ```Javascript
-iris.DiscNumber.list({"areaCode":"919"}, function(err,list){
-  console.log("Disconnected numbers: " + JSON.stringify(list, null, 2));
-})
+iris.DiscNumber.list({"areaCode":"919"}, callback);
 ```
 
 ## Disconnect Numbers 
@@ -120,34 +101,26 @@ The Disconnect object is used to disconnect numbers from an account.  Creates a 
 
 ### Create Disconnect
 ```Javascript
-iris.Disconnect.create("Disconnect Order Name", ["9195551212", "9195551213"], function(err, item){
-  console.log("Disconnect order id: " + item.id);  
-});
+iris.Disconnect.create("Disconnect Order Name", ["9195551212", "9195551213"], callback);
 ```
 
 ### Get Disconnect
 ```Javascript
-iris.Disconnect.get("orderId", {tnDetail:true}, function(err,order){
-  console.log("Disconnect order: " + JSON.stringify(order,null,2));
-})
+iris.Disconnect.get("orderId", {tnDetail:true}, callback);
 ```
 
 ### Add Note to Disconnect
 ```Javascript
 var note = {userId: "my id", description: "Test"};
 iris.Disconnect.get("orderId", {tnDetail:true}, function(err,order){
-  order.addNote(note, function(err, note){
-    console.log("Note added: " + note.id);
-  });
+  order.addNote(note, callback);
 });
 ```
 
 ### Get Notes for Disconnect
 ```Javascript
 iris.Disconnect.get("orderId", {tnDetail:true}, function(err,order){
-  order.getNotes(function(err, notes){
-    console.log(JSON.stringify(notes, null, 2));
-  });
+  order.getNotes(callback);
 });
 ```
 
@@ -180,32 +153,24 @@ var dlda = {
   ]
 }
 
-iris.Dlda.create(dlda, function(err, item){
-  console.log("Created order: " + item.id);
-});
+iris.Dlda.create(dlda, callback);
 ```
 
 ### Get Dlda
 ```Javascript
-iris.Dlda.get("dldaId", function(err, item){
-  console.log(JSON.stringify(item));
-});
+iris.Dlda.get(id, callback);
 ```
 
 ### Get Dlda History
 ```Javascript
-iris.Dlda.get("dldaId", function(err,dlda){
-  dlda.getHistory(function(err,history){
-    console.log("History: " + JSON.stringify(history));
-  });
+iris.Dlda.get(id, function(err,dlda){
+  dlda.getHistory(callback);
 });
 ```
 
 ### List Dldas
 ```Javascript
-iris.Dlda.list({telephoneNumber:"9195551212"}, function(err,list){
-  console.log(JSON.stringify(list));
-});
+iris.Dlda.list({telephoneNumber:"9195551212"}, callback);
 ```
 
 ## Import To Account
@@ -215,17 +180,12 @@ This path is generally not available to Bandwidth accounts, and as such is not d
 
 ### List InService Numbers
 ```Javascript
-iris.InServiceNumber.list({"areaCode":"919"}, function(err, list){
-  console.log("Numbers List: " + JSON.stringify(list,null,2));
-  
-});
+iris.InServiceNumber.list({"areaCode":"919"}, callback);
 ```
 
 ### Get InService Number Detail
 ```Javascript
-iris.InServiceNumber.get("9195551212", function(err,item){
-  console.log("In Service Number: " + JSON.stringify(item, null, 2));  
-});
+iris.InServiceNumber.get("9195551212", callback);
 ```
 
 ## Lidb
@@ -243,21 +203,15 @@ var data = {
     }
   }
 }
-iris.Lidbs.create(data, function(err,lidb){
-  console.log(JSON.stringify(lidb, null, 2));
-});
+iris.Lidbs.create(data, callback);
 ```
 ### Get Lidb
 ```Javascript
-iris.Lidbs.get("id", function(err,lidb){
-  console.log(JSON.stringify(lidb, null, 2));
-});
+iris.Lidbs.get(id, callback);
 ```
 ### List Lidbs
 ```Javascript
-iris.Lidbs.list({telephoneNumber:"9195551212"}, function(err,list){
-  console.log(JSON.stringify(list, null, 2));
-});
+iris.Lidbs.list({telephoneNumber:"9195551212"}, callback);
 ```
 
 ## LNP Checker
@@ -265,9 +219,7 @@ iris.Lidbs.list({telephoneNumber:"9195551212"}, function(err,list){
 ```Javascript
 var numbers = ["9195551212", "9195551213"];
 var fullCheck = true;
-iris.LnpChecker.check(numbers, fullCheck, function(err,res){
-  console.log(JSON.stringify(res, null, 2))
-});
+iris.LnpChecker.check(numbers, fullCheck, callback);
 ```
 
 ## LSR Orders
@@ -299,58 +251,40 @@ var data = {
   }
 };
 
-iris.LsrOrder.create(data, function(err, order){
-  console.log(JSON.stringify(order, null, 2));  
-});
+iris.LsrOrder.create(data, callback);
 ```
 ### Get LSR Order
 ```Javascript
-iris.LsrOrder.get("id", function(err, order){
-  console.log(JSON.stringify(order)) 
-});
+iris.LsrOrder.get(id, callback);
 ```
 ### List LSR Orders
 ```Javascript
-iris.LsrOrder.list({pon:"Some Pon"}, function(err,list){
-  console.log(JSON.stringify(list, null, 2));
-});
+iris.LsrOrder.list({pon:"Some Pon"}, callback);
 ```
 ### Update LSR Order
 ```Javascript
 iris.LsrOrder.get("id", function(err, order){
   order.requestedFocDate = "2015-11-16";
-  iris.LsrOrder.update(order, function(err,res){
-    if(err){
-      console.log(err)
-    }else {
-      console.log("update succeeded!");
-    }
-  });
+  iris.LsrOrder.update(order, callback);
 })
 ```
 ### Get LSR Order History
 ```Javascript
 iris.LsrOrder.get("id", function(err, order){
-  order.getHistory(function(err,history){
-    console.log(JSON.stringify(history, null, 2));
-  });
+  order.getHistory(callback);
 });
 ```
 ### Get LSR Order Notes
 ```Javascript
 iris.LsrOrder.get("id", function(err,order){
-  order.getNotes(function(err, notes){
-    console.log(JSON.stringify(notes, null, 2));
-  });
+  order.getNotes(callback);
 });
 ```
 ### Add LSR Order Note
 ```Javascript
 var note = {userId: "my id", description: "Test"};
 iris.LsrOrder.get("id", function(err, order){
-  order.addNote(note, function(err, res){
-    console.log("Note added: " + note.id);
-  });
+  order.addNote(note, callback);
 });
 ```
 
@@ -369,42 +303,20 @@ var order = {
   }
 };
 
-iris.Order.create(order, function(err,res){
-  if(err){
-    console.log("error: " + err);
-  }else {
-    console.log("Order successfully created" );
-    console.log(JSON.stringify(res.order,null,2));
-  }
-});
+iris.Order.create(order, callback);
 ```
 ### Get Order
 ```Javascript
-var orderId = "the order id";
-
-iris.Order.get(orderId, function(err,order){
-  if(err){
-    console.log("error: " + err);
-  }else {
-    console.log("Order Details:" );
-    console.log(JSON.stringify(order,null,2));
-  }
-});
+iris.Order.get(id, callback);
 ```
 ### List Orders
 ```Javascript
-var query = {customerOrderId:"someId"};
-iris.Order.list(query, function(err,list){
-  //Note that we do not return a client with orders in the list due to additional details in the respons
-  console.log(JSON.stringify(list, null, 2));
-});
+iris.Order.list(query, callback);
 ```
 ### List Area Codes for Order
 ```Javascript
-iris.Order.get("orderId", function(err, order){
-  order.getAreaCodes(function(err, areaCodes){
-    console.log(JSON.stringify(areaCodes, null, 2));
-  });
+iris.Order.get(id, function(err, order){
+  order.getAreaCodes(callback);
 });
 ```
 ### Order Instance Methods 
@@ -457,15 +369,11 @@ var data = {
   billingType: "PORTIN"
 };
 
-iris.PortIn.create(data, function(err, item){
-  console.log(JSON.stringify(item, null, 2));
-});
+iris.PortIn.create(data, callback);
 ```
 ## Get PortIn
 ```Javascript
-iris.PortIn.get("id", function(err, portIn){
-  console.log(JSON.stringify(portIn, null, 2));
-});
+iris.PortIn.get("id", callback)
 ```
 
 ## List PortIns
@@ -509,6 +417,90 @@ iris.PortIn.get("id", function(err, portIn){
 });
 ```
 
+## Port Out
+### List PortOuts
+```Javascript
+var query = {"status":"complete"}
+iris.PortOut.list(query, callback);
+```
+### Get PortOut
+```Javascript
+iris.PortOut.get(id, callback);
+```
+
+## Rate Centers
+### List Ratecenters
+```Javascript
+var query = {"available":true, "state":"CA"}
+iris.RateCenter.list(query, callback);
+```
+
+## SIP Peers
+### Create SIP Peer
+```Javascript
+var data = {
+  peerName:"A New SIP Peer",
+  isDefaultPeer:false, 
+  shortMessagingProtocol:"SMPP",
+  siteId:selectedSite, 
+  voiceHosts:[
+    {
+      host:{
+        hostName:"1.1.1.1"
+      }
+    }
+  ],
+  smsHosts:[
+    {
+      host:{
+        hostName:"1.1.1.1"
+      }
+    }
+  ],
+  terminationHosts:[
+    {
+      terminationHost:{
+        hostName:"1.1.1.1",
+        port:5060,
+      }
+    }
+  ]
+};
+
+iris.SipPeer.create(data, callback);
+```
+### Get SIP Peer
+```Javascript
+iris.SipPeer.get("id", callback);
+```
+### List SIP Peers
+```Javascript
+iris.SipPeer.list(siteId, callback);
+```
+### Delete SIP Peer
+```Javascript
+iris.SipPeer.get(function(err, sipPeer){
+  sipPeer.delete(callback);
+});
+```
+### SipPeer TN Methods
+```Javascript
+iris.SipPeer.get(function(err,sipPeer){
+  // get TN for this peer
+  sipPeer.getTns(number, callback);  
+  
+  // get all TNs for this peer
+  sipPeer.getTns(callback);
+
+  // Update TNs for this peer
+  var tns = {fullNumber: "123456", rewriteUser: "test"};
+  sipPeer.updateTns(number, tns, callback);
+
+  // Move Tns to new peer
+  var numbersToMove = ["9195551212", "9195551213"];
+  sipPeer.moveTns(numbersToMove, callback);
+});
+```
 
 ## Sites
 
@@ -527,10 +519,7 @@ var site = {
     addressType: "Service"
   }
 };
-
-iris.Site.create(site, function(err,site){
-  console.log("site created with id: " + site.id);
-});
+iris.Site.create(site, callback);
 ```
 
 ### Updating a Site
@@ -538,18 +527,116 @@ iris.Site.create(site, function(err,site){
 site.name = "Some new name";
 site.update(site, callback);
 ```
-
 ### Deleting a Site
 ```Javascript
 site.delete(callback);
 ```
-
 ### Listing All Sites
 ```Javascript
-iris.Site.list(function(err,list){
-  for(var site in list){
-    console.log("ID: " + site.id + " Name: " + site.name);
-  }
-});
+iris.Site.list(callback);
+```
+### Site Instance Methods
+```Javascript
+iris.Site.get(id, function(err,site){
+  // getInService numbers
+  site.getInserviceNumbers(query, callback);
 
+  // get Orders
+  site.getOrders(query, callback);
+
+  // get PortIns
+  site.getPortIns(query, callback);
+
+  // get Total Tns
+  site.getTotalTns(query, callback); 
+});
+```
+### Site SipPeer Methods
+```Javascript
+iris.Site.get(id, function(err,site){
+  // get Sip Peers
+  site.getSipPeers(callback);
+
+  // get Sip Peer
+  site.getSipPeer(id, callback);
+
+  // create Sip Peer
+  var sipPeer = {name:"SIP Peer"};
+  site.createSipPeer(sipPeer, callback);
+});
+```
+
+## Subscriptions
+### Create Subscription
+```Javascript
+var subscription = {
+  orderType:"orders",
+  callbackSubcription: {
+    url:"http://mycallbackurl.com",
+    user:"userid",
+    expiry: 12000
+  }
+};
+iris.Subscription.create(subscription, callback);
+```
+### Get Subscription
+```Javascript
+iris.Subscription.get(id, callback);
+```
+### List Subscriptions
+```Javascript
+iris.Subscription.list(query, callback);
+```
+### Subscription Instance Methods
+```Javascript
+iris.Subscription.get(id, function(err, subscription){
+  // update subscription
+  var updatedData = {orderType:"portins"};
+  subscription.update(updatedData, callback)
+
+  // delete subscription
+  subscription.delete(callback);
+});
+```
+
+## TNs
+### Get TN
+```Javascript
+iris.Tn.get(fullNumber, callback);
+```
+### List TNs
+```Javascript
+iris.Tn.list(query, callback);
+```
+### TN Instance Methods
+```Javascript
+iris.Tn.get(fullNumber, function(err, tn){
+  // Get TN Details
+  tn.getTnDetails(callback);
+
+  // Get Sites
+  tn.getSites(callback);
+
+  // Get Sip Peers
+  tn.getSipPeers(callback);
+
+  // Get Rate Center
+  tn.getRateCenter(callback)
+});
+```
+
+## TN Reservation
+### Create TN Reservation
+```Javascript
+iris.TnReservation.create({"reservedTn":"9195551212"}, callback);
+```
+### Get TN Reservation
+```Javascript
+iris.TnReservation.get(id, callback);
+```
+### Delete TN Reservation
+```Javascript
+iris.TnReservation.get(id, function(err, tn){
+  tn.delete(callback);
+});
 ```
