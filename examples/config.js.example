@@ -3,5 +3,6 @@ module.exports = {
   "accountId":"",
   "userName":"",
   "password":"",
-  "selectedSiteId":""
+  "selectedSiteId":"",
+  "selectedSipPeerId":""
 };
