@@ -9,7 +9,7 @@ iris.Client.globalOptions.password = config.password;
 var selectedSite = config.selectedSiteId;
 
 if(process.argv.length < 3){
-  console.log("usage: node sippeer-create-sample [host] e.g. node tns-details-sample 1.1.1.1");
+  console.log("usage: node sippeer-create-sample [host] e.g. node sippeer-create-sample 1.1.1.1");
   process.exit(1);
 }
 
