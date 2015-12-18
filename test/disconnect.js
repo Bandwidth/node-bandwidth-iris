@@ -109,7 +109,7 @@ describe("Disconnect", function(){
           name: "test",
           _nameXmlElement: "name",
          disconnectTelephoneNumberOrderType: {
-          telephoneNumber: ["111", "222"]
+           telephoneNumberList: [{telephoneNumber: "111"}, {telephoneNumber: "222"}]
          }
         }
       };
@@ -122,7 +122,7 @@ describe("Disconnect", function(){
           name: "test",
           _nameXmlElement: "name",
          disconnectTelephoneNumberOrderType: {
-          telephoneNumber: ["111", "222"]
+           telephoneNumberList: [{telephoneNumber: "111"}, {telephoneNumber: "222"}]
          }
         }
       };
