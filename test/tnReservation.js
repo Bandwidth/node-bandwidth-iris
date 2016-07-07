@@ -50,7 +50,7 @@ describe("TnReservation", function(){
   describe("#create", function(){
     it("should create a  tnreservation", function(done){
       var data = {accountId: "111", reservedTn: "000"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/tnreservation", helper.buildXml({tnReservation: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/tnreservation/1"});
+      helper.nock().post("/v1.0/accounts/FakeAccountId/tnreservation", helper.buildXml({reservation: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/tnreservation/1"});
       helper.nock().get("/v1.0/accounts/FakeAccountId/tnreservation/1").reply(200, helper.xml.tnReservation, {"Content-Type": "application/xml"});
       TnReservation.create(helper.createClient(), data,  function(err, item){
         if(err){
@@ -63,7 +63,7 @@ describe("TnReservation", function(){
     });
     it("should create a  tnreservation (with default client)", function(done){
       var data = {accountId: "111", reservedTn: "000"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/tnreservation", helper.buildXml({tnReservation: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/tnreservation/1"});
+      helper.nock().post("/v1.0/accounts/FakeAccountId/tnreservation", helper.buildXml({reservation: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/tnreservation/1"});
       helper.nock().get("/v1.0/accounts/FakeAccountId/tnreservation/1").reply(200, helper.xml.tnReservation, {"Content-Type": "application/xml"});
       TnReservation.create(data,  function(err, item){
         if(err){
