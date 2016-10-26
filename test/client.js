@@ -108,12 +108,12 @@ describe("client tests", function(){
       });
     });
     it("should make PUT request and parse output xml data", function(done){
-      var span = nock("https://api.inetwork.com").put("/v1.0/test", "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<Root>\n  <Test1>test1</Test1>  <Bool>false</Bool>\n</Root>")
+      var span = nock("https://api.inetwork.com").put("/v1.0/test", "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<Root>\n  <Test1>test1</Test1>\n  <BoolValue>false</BoolValue>\n</Root>")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>test</Test></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("put", "/test", {
         root: {
           test1: "test1",
-          bool: false
+          boolValue: false
         }
       }, function(err, r){
         if(err){
