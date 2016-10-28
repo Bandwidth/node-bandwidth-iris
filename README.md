@@ -14,7 +14,7 @@ npm install bandwidth-iris
 
 ## Usage
 
-```
+```js
 var iris = require("bandwidth-iris");
 
 //Using client directly
@@ -55,6 +55,7 @@ When fetching objects from the API, it will always return an object that has the
 instantiated so that you can call dependent methods as well as update, delete.
 
 Example:
+
 ```Javascript
 iris.Site.create({siteObject}, function(err,item){
   console.log("the site ID is: " + item.id);
@@ -71,27 +72,32 @@ case by the internals of the API when converted to XML.
 
 
 ## Available Numbers
+
 ```Javascript
 iris.AvailableNumbers.list(query, callback);
 ```
 
 ## Available NpaNxx
+
 ```Javascript
 iris.AvailableNpaNxx.list({areaCode:"818", quantity:5}, callback);
 ```
 
 ## Cities
+
 ```Javascript
 iris.City.list({"available":true, "state":"CA"}, callback);
 ```
 
 ## Covered Rate Centers
+
 ```Javascript
 iris.CoveredRateCenter.list({"zip":"27601"}, callback);
 ```
 
 ## Disconnected Numbers
 Retrieves a list of disconnected numbers for an account
+
 ```Javascript
 iris.DiscNumber.list({"areaCode":"919"}, callback);
 ```
@@ -100,16 +106,19 @@ iris.DiscNumber.list({"areaCode":"919"}, callback);
 The Disconnect object is used to disconnect numbers from an account.  Creates a disconnect order that can be tracked
 
 ### Create Disconnect
+
 ```Javascript
 iris.Disconnect.create("Disconnect Order Name", ["9195551212", "9195551213"], callback);
 ```
 
 ### Get Disconnect
+
 ```Javascript
 iris.Disconnect.get("orderId", {tnDetail:true}, callback);
 ```
 
 ### Add Note to Disconnect
+
 ```Javascript
 var note = {userId: "my id", description: "Test"};
 iris.Disconnect.get("orderId", {tnDetail:true}, function(err,order){
@@ -118,6 +127,7 @@ iris.Disconnect.get("orderId", {tnDetail:true}, function(err,order){
 ```
 
 ### Get Notes for Disconnect
+
 ```Javascript
 iris.Disconnect.get("orderId", {tnDetail:true}, function(err,order){
   order.getNotes(callback);
@@ -127,6 +137,7 @@ iris.Disconnect.get("orderId", {tnDetail:true}, function(err,order){
 ## Dlda
 
 ### Create Ddla
+
 ```Javascript
 var dlda = {
   customerOrderId:"Your Order Id",
@@ -157,11 +168,13 @@ iris.Dlda.create(dlda, callback);
 ```
 
 ### Get Dlda
+
 ```Javascript
 iris.Dlda.get(id, callback);
 ```
 
 ### Get Dlda History
+
 ```Javascript
 iris.Dlda.get(id, function(err,dlda){
   dlda.getHistory(callback);
@@ -169,6 +182,7 @@ iris.Dlda.get(id, function(err,dlda){
 ```
 
 ### List Dldas
+
 ```Javascript
 iris.Dlda.list({telephoneNumber:"9195551212"}, callback);
 ```
@@ -179,11 +193,13 @@ This path is generally not available to Bandwidth accounts, and as such is not d
 ## In Service Numbers
 
 ### List InService Numbers
+
 ```Javascript
 iris.InServiceNumber.list({"areaCode":"919"}, callback);
 ```
 
 ### Get InService Number Detail
+
 ```Javascript
 iris.InServiceNumber.get("9195551212", callback);
 ```
@@ -191,6 +207,7 @@ iris.InServiceNumber.get("9195551212", callback);
 ## Lidb
 
 ### Create
+
 ```Javascript
 var data = {
   customerOrderId:"A test order",
@@ -206,16 +223,19 @@ var data = {
 iris.Lidbs.create(data, callback);
 ```
 ### Get Lidb
+
 ```Javascript
 iris.Lidbs.get(id, callback);
 ```
 ### List Lidbs
+
 ```Javascript
 iris.Lidbs.list({telephoneNumber:"9195551212"}, callback);
 ```
 
 ## LNP Checker
 ### Check LNP
+
 ```Javascript
 var numbers = ["9195551212", "9195551213"];
 var fullCheck = true;
@@ -224,6 +244,7 @@ iris.LnpChecker.check(numbers, fullCheck, callback);
 
 ## LSR Orders
 ### Create LSR Order
+
 ```Javascript
 var data = {
   pon:"Some Pon",
@@ -253,15 +274,21 @@ var data = {
 
 iris.LsrOrder.create(data, callback);
 ```
+
 ### Get LSR Order
+
 ```Javascript
 iris.LsrOrder.get(id, callback);
 ```
+
 ### List LSR Orders
+
 ```Javascript
 iris.LsrOrder.list({pon:"Some Pon"}, callback);
 ```
+
 ### Update LSR Order
+
 ```Javascript
 iris.LsrOrder.get("id", function(err, order){
   order.requestedFocDate = "2015-11-16";
@@ -269,18 +296,23 @@ iris.LsrOrder.get("id", function(err, order){
 })
 ```
 ### Get LSR Order History
+
 ```Javascript
 iris.LsrOrder.get("id", function(err, order){
   order.getHistory(callback);
 });
 ```
+
 ### Get LSR Order Notes
+
 ```Javascript
 iris.LsrOrder.get("id", function(err,order){
   order.getNotes(callback);
 });
 ```
+
 ### Add LSR Order Note
+
 ```Javascript
 var note = {userId: "my id", description: "Test"};
 iris.LsrOrder.get("id", function(err, order){
@@ -290,6 +322,7 @@ iris.LsrOrder.get("id", function(err, order){
 
 ## Orders
 ### Create Order
+
 ```Javascript
 var order = {
   name:"A Test Order",
@@ -305,21 +338,30 @@ var order = {
 
 iris.Order.create(order, callback);
 ```
+
 ### Get Order
+
 ```Javascript
 iris.Order.get(id, callback);
 ```
+
 ### List Orders
+
 ```Javascript
 iris.Order.list(query, callback);
 ```
+
 ### List Area Codes for Order
+
 ```Javascript
 iris.Order.get(id, function(err, order){
   order.getAreaCodes(callback);
 });
+
 ```
+
 ### Order Instance Methods 
+
 ```Javascript
 // get Area Codes
 order.getAreaCodes(callback);
@@ -371,19 +413,24 @@ var data = {
 
 iris.PortIn.create(data, callback);
 ```
+
 ## Get PortIn
+
 ```Javascript
 iris.PortIn.get("id", callback)
 ```
 
 ## List PortIns
+
 ``` Javascript
 var query = {pon:"a pon"};
 iris.PortIn.list(query, function(err, list){
   console.log(JSON.stringify(list));
 });
 ```
+
 ### PortIn Instance methods
+
 ```Javascript
 // fetch instance using PortIn.get(callback, portIn)
 portIn.update(data, callback);
@@ -396,7 +443,9 @@ portIn.getNotes(callback);
 portIn.addNote(callback);
 portIn.getActivationStatus(callback);
 ```
+
 ### PortIn File Management
+
 ```Javascript
 
 iris.PortIn.get("id", function(err, portIn){
@@ -419,17 +468,21 @@ iris.PortIn.get("id", function(err, portIn){
 
 ## Port Out
 ### List PortOuts
+
 ```Javascript
 var query = {"status":"complete"}
 iris.PortOut.list(query, callback);
 ```
+
 ### Get PortOut
+
 ```Javascript
 iris.PortOut.get(id, callback);
 ```
 
 ## Rate Centers
 ### List Ratecenters
+
 ```Javascript
 var query = {"available":true, "state":"CA"}
 iris.RateCenter.list(query, callback);
@@ -437,6 +490,7 @@ iris.RateCenter.list(query, callback);
 
 ## SIP Peers
 ### Create SIP Peer
+
 ```Javascript
 var data = {
   peerName:"A New SIP Peer",
@@ -469,21 +523,29 @@ var data = {
 
 iris.SipPeer.create(data, callback);
 ```
+
 ### Get SIP Peer
+
 ```Javascript
 iris.SipPeer.get("id", callback);
 ```
+
 ### List SIP Peers
+
 ```Javascript
 iris.SipPeer.list(siteId, callback);
 ```
+
 ### Delete SIP Peer
+
 ```Javascript
 iris.SipPeer.get(function(err, sipPeer){
   sipPeer.delete(callback);
 });
 ```
+
 ### SipPeer TN Methods
+
 ```Javascript
 iris.SipPeer.get(function(err,sipPeer){
   // get TN for this peer
@@ -506,6 +568,7 @@ iris.SipPeer.get(function(err,sipPeer){
 
 ### Create A Site
 A site is what is called Location in the web UI. 
+
 ```Javascript
 var site = {
   name:"A new site",
@@ -523,11 +586,14 @@ iris.Site.create(site, callback);
 ```
 
 ### Updating a Site
+
 ```Javascript
 site.name = "Some new name";
 site.update(site, callback);
 ```
+
 ### Deleting a Site
+
 ```Javascript
 site.delete(callback);
 ```
@@ -535,7 +601,9 @@ site.delete(callback);
 ```Javascript
 iris.Site.list(callback);
 ```
+
 ### Site Instance Methods
+
 ```Javascript
 iris.Site.get(id, function(err,site){
   // getInService numbers
@@ -552,6 +620,7 @@ iris.Site.get(id, function(err,site){
 });
 ```
 ### Site SipPeer Methods
+
 ```Javascript
 iris.Site.get(id, function(err,site){
   // get Sip Peers
@@ -568,6 +637,7 @@ iris.Site.get(id, function(err,site){
 
 ## Subscriptions
 ### Create Subscription
+
 ```Javascript
 var subscription = {
   orderType:"orders",
@@ -579,15 +649,21 @@ var subscription = {
 };
 iris.Subscription.create(subscription, callback);
 ```
+
 ### Get Subscription
+
 ```Javascript
 iris.Subscription.get(id, callback);
 ```
+
 ### List Subscriptions
+
 ```Javascript
 iris.Subscription.list(query, callback);
 ```
+
 ### Subscription Instance Methods
+
 ```Javascript
 iris.Subscription.get(id, function(err, subscription){
   // update subscription
@@ -601,14 +677,19 @@ iris.Subscription.get(id, function(err, subscription){
 
 ## TNs
 ### Get TN
+
 ```Javascript
 iris.Tn.get(fullNumber, callback);
 ```
+
 ### List TNs
+
 ```Javascript
 iris.Tn.list(query, callback);
 ```
+
 ### TN Instance Methods
+
 ```Javascript
 iris.Tn.get(fullNumber, function(err, tn){
   // Get TN Details
@@ -627,14 +708,19 @@ iris.Tn.get(fullNumber, function(err, tn){
 
 ## TN Reservation
 ### Create TN Reservation
+
 ```Javascript
 iris.TnReservation.create({"reservedTn":"9195551212"}, callback);
 ```
+
 ### Get TN Reservation
+
 ```Javascript
 iris.TnReservation.get(id, callback);
 ```
+
 ### Delete TN Reservation
+
 ```Javascript
 iris.TnReservation.get(id, function(err, tn){
   tn.delete(callback);
