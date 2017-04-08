@@ -157,6 +157,21 @@ describe("PortIn", function(){
       });
     });
   });
+  describe("#getHistory", function(){
+    it("should return totals", function(done){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/history").reply(200, helper.xml.orderHistory, {"Content-Type": "application/xml"});
+      var order = new PortIn();
+      order.id = 1;
+      order.client = helper.createClient();
+      order.getHistory(function(err, history){
+        if(err){
+          return done(err);
+        }
+        history.length.should.eql(2);
+        done();
+      });
+    });
+  });
   describe("#getTns", function(){
     it("should return tns", function(done){
       helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/tns").reply(200, helper.xml.orderTns, {"Content-Type": "application/xml"});
