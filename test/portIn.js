@@ -309,6 +309,16 @@ describe("PortIn", function(){
       });
     });
   });
+  describe("#updateFileMetadata", function(){
+    it("should update file's metadata", function(done){
+      var metadata = { documentName: "doc", documentType: "type"};
+      helper.nock().put("/v1.0/accounts/FakeAccountId/portins/1/loas/file.txt/metadata", helper.buildXml({ fileMetaData: metadata})).reply(200);
+      var order = new PortIn();
+      order.id = 1;
+      order.client = helper.createClient();
+      order.updateFileMetadata("file.txt", metadata, done);
+    });
+  });
   describe("#getFile", function(){
     var tmpFile = path.join(os.tmpdir(), "dest.txt");
     beforeEach(function(){
