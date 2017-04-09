@@ -12,6 +12,17 @@ describe("Disconnect", function(){
     nock.cleanAll();
     nock.enableNetConnect();
   });
+  describe("#list", function(){
+    it("should return list of orders", function(done){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/disconnects").reply(200, helper.xml.order, {"Content-Type": "application/xml"});
+      var client = helper.createClient();
+      Disconnect.list(client, {}, done);
+    });
+    it("should return list of orders (with default client)", function(done){
+      helper.nock().get("/v1.0/accounts/FakeAccountId/disconnects").reply(200, helper.xml.order, {"Content-Type": "application/xml"});
+      Disconnect.list({}, done);
+    });
+  });
   describe("#getNotes", function(){
     it("should return notes", function(done){
       helper.nock().get("/v1.0/accounts/FakeAccountId/disconnects/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
