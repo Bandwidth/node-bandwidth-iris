@@ -1,6 +1,6 @@
 {
   "name": "bandwidth-iris",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "NodeJs Client library for IRIS / BBS API",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bandwidthcom/node-bandwidth-iris.git"
+    "url": "https://github.com/bandwidth/node-bandwidth-iris.git"
   },
   "keywords": [
     "bandwidth",
@@ -18,9 +18,9 @@
   "author": "bandwidth",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bandwidthcom/node-bandwidth-iris/issues"
+    "url": "https://github.com/bandwidth/node-bandwidth-iris/issues"
   },
-  "homepage": "https://github.com/bandwidthcom/node-bandwidth-iris",
+  "homepage": "https://github.com/bandwidth/node-bandwidth-iris",
   "dependencies": {
     "superagent": "^0.21.0",
     "xml2js": "^0.4.4"

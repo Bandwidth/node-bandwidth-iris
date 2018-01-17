@@ -1,6 +1,6 @@
 # node-bandwidth-iris
 
-[![Build](https://travis-ci.org/bandwidthcom/node-bandwidth-iris.png)](https://travis-ci.org/bandwidthcom/node-bandwidth-iris)
+[![Build](https://travis-ci.org/bandwidthcom/node-bandwidth-iris.png)](https://travis-ci.org/bandwidth/node-bandwidth-iris)
 
 NodeJs Client library for IRIS / BBS API
 
@@ -29,7 +29,7 @@ iris.Client.globalOptions.password = "password";
 //Now you can call any functions without first arg 'client'
 
 iris.Site.list(function(err, sites){
-  //Default client will be used to do this call 
+  //Default client will be used to do this call
 });
 
 ```
@@ -49,7 +49,7 @@ node coveredRateCenters-sample.js
 If the examples take command line parameters, you will get the usage by just executing the individual script.
 
 
-## API Objects 
+## API Objects
 ### General principles
 When fetching objects from the API, it will always return an object that has the client
 instantiated so that you can call dependent methods as well as update, delete.
