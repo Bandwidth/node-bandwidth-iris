@@ -244,6 +244,77 @@ describe("client tests", function(){
         param3: true
       }, done);
     });
+
+    it("should callback with err and result", function(done){
+      var responseXml = [
+        '<?xml version="1.0"?>',
+        '<OrderResponse>',
+          '<CompletedQuantity>1</CompletedQuantity>',
+          '<CreatedByUser>xyz</CreatedByUser>',
+          '<ErrorList>',
+            '<Error>',
+              '<Code>5005</Code>',
+              '<Description>The telephone number is unavailable for ordering</Description>',
+              '<TelephoneNumber>6365555555</TelephoneNumber>',
+          ' </Error>',
+        ' </ErrorList>',
+          '<FailedNumbers>',
+            '<FullNumber>6365555555</FullNumber>',
+          '</FailedNumbers>',
+          '<LastModifiedDate>2018-03-01T16:39:55.335Z</LastModifiedDate>',
+          '<OrderCompleteDate>2018-03-01T16:39:55.335Z</OrderCompleteDate>',
+          '<Order>',
+          ' <Name>NEC Main Test:215</Name>',
+            '<OrderCreateDate>2018-03-01T16:39:55.255Z</OrderCreateDate>',
+            '<PeerId>510464</PeerId>',
+            '<BackOrderRequested>false</BackOrderRequested>',
+          ' <ExistingTelephoneNumberOrderType>',
+              '<TelephoneNumberList>',
+                '<TelephoneNumber>6365555555</TelephoneNumber>',
+                '<TelephoneNumber>6361231234</TelephoneNumber>',
+              '</TelephoneNumberList>',
+            '</ExistingTelephoneNumberOrderType>',
+            '<PartialAllowed>true</PartialAllowed>',
+            '<SiteId>90210</SiteId>',
+          '</Order>',
+          '<OrderStatus>PARTIAL</OrderStatus>',
+          '<CompletedNumbers>',
+            '<TelephoneNumber>',
+              '<FullNumber>6361231234</FullNumber>',
+            '</TelephoneNumber>',
+          '</CompletedNumbers>',
+          '<Summary>1 out of 2 numbers ordered in (636)</Summary>',
+          '<FailedQuantity>1</FailedQuantity>',
+        '</OrderResponse>'
+      ].join('');
+  
+      var span = nock("https://api.inetwork.com").get("/v1.0/test?param1=1&param2=test&param3=true")
+        .reply(200, responseXml, {"Content-Type": "application/xml"})
+      client.makeRequest("get", "/test", {
+        param1: 1,
+        param2: "test",
+        param3: true
+      }, function(err, result){
+        if(!err){
+          return done(new Error("Error has been expected"));
+        }
+        try {
+          err.message.should.equal("The telephone number is unavailable for ordering");
+          err.code.should.equal(5005);
+  
+          if (!result) {
+            return done(new Error("Expected result to not be undefined"))
+          }
+  
+          result.failedQuantity.should.equal(1);
+          result.completedNumbers.telephoneNumber.fullNumber.should.equal('6361231234');
+          done();
+        } catch (fail) {
+          done(fail);
+        }
+
+      });
+    })
   });
   describe("#concatAccountPath", function(){
     it("should return formatted url", function(){
