@@ -1,4 +1,11 @@
 language: node_js
 node_js:
-  - '0.10'
-
+- '0.10'
+deploy:
+  provider: npm
+  email: hi@dtolb.com
+  api_key:
+    secure: JCu71vW2kLrs5m811AoGfxwnPYBbhMe1xbg1fT3p6BdvYhora7Lx468+QdTWQ/wsHMBfozn5G2LZGFVdRr0W7DMkYybfc9rz5QJ5WaQOIh6FGon+370iS1pOz7ujrEoU5d/0InKO3CqjxmAtOJBsZz615wcB2pa1+8qLZWfRmko=
+  on:
+    tags: true
+    repo: Bandwidth/node-bandwidth-iris
