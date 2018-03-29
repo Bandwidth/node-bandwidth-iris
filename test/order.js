@@ -135,6 +135,66 @@ describe("Order", function(){
         done(new Error("An error is expected"));
       });
     });
+    it("should return error along with item on partial failure", function(done){
+      var responseXml = [
+        '<?xml version="1.0"?>',
+        '<OrderResponse>',
+          '<CompletedQuantity>1</CompletedQuantity>',
+          '<CreatedByUser>xyz</CreatedByUser>',
+          '<ErrorList>',
+            '<Error>',
+              '<Code>5005</Code>',
+              '<Description>The telephone number is unavailable for ordering</Description>',
+              '<TelephoneNumber>6365555555</TelephoneNumber>',
+          ' </Error>',
+        ' </ErrorList>',
+          '<FailedNumbers>',
+            '<FullNumber>6365555555</FullNumber>',
+          '</FailedNumbers>',
+          '<LastModifiedDate>2018-03-01T16:39:55.335Z</LastModifiedDate>',
+          '<OrderCompleteDate>2018-03-01T16:39:55.335Z</OrderCompleteDate>',
+          '<Order>',
+          ' <Name>NEC Main Test:215</Name>',
+            '<OrderCreateDate>2018-03-01T16:39:55.255Z</OrderCreateDate>',
+            '<PeerId>510464</PeerId>',
+            '<BackOrderRequested>false</BackOrderRequested>',
+          ' <ExistingTelephoneNumberOrderType>',
+              '<TelephoneNumberList>',
+                '<TelephoneNumber>6365555555</TelephoneNumber>',
+                '<TelephoneNumber>6361231234</TelephoneNumber>',
+              '</TelephoneNumberList>',
+            '</ExistingTelephoneNumberOrderType>',
+            '<PartialAllowed>true</PartialAllowed>',
+            '<SiteId>90210</SiteId>',
+          '</Order>',
+          '<OrderStatus>PARTIAL</OrderStatus>',
+          '<CompletedNumbers>',
+            '<TelephoneNumber>',
+              '<FullNumber>6361231234</FullNumber>',
+            '</TelephoneNumber>',
+          '</CompletedNumbers>',
+          '<Summary>1 out of 2 numbers ordered in (636)</Summary>',
+          '<FailedQuantity>1</FailedQuantity>',
+        '</OrderResponse>'
+      ].join('');
+      helper.nock().get("/v1.0/accounts/FakeAccountId/orders/101").reply(200, responseXml);
+      Order.get(helper.createClient(), "101", function(err, item){
+        if(!err){
+          return done(new Error("An error is expected"));
+        }
+        if(!item){
+          return done(new Error("An item was expected as well"));
+        }
+        
+        try {
+          item.failedQuantity.should.equal(1);
+          item.completedNumbers.telephoneNumber.fullNumber.should.equal('6361231234');
+          done();
+        } catch (fail) {
+          done(fail);
+        }
+      });
+    });
   });
   describe("#update", function(){
     it("should update a order", function(done){
