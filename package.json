@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/bandwidth/node-bandwidth-iris",
   "dependencies": {
+    "streamifier": "^0.1.1",
     "superagent": "^3.7.0",
     "xml2js": "^0.4.4"
   },
