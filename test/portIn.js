@@ -434,7 +434,8 @@ describe("PortIn", function(){
       helper.nock().post("/v1.0/accounts/FakeAccountId/portins/1/loas", "11111", {"Content-Type": "text/plain"}).reply(400);
       order.createFile(new Buffer.from("11111", "utf8"), "text/plain", function(err, fileName){
         if(err){
-          return done();
+          err.message.should.equal("Http code 400");
+          return done(err);
         }
         done(new Error("An error is estimated"));
       });
@@ -478,7 +479,8 @@ describe("PortIn", function(){
       helper.nock().put("/v1.0/accounts/FakeAccountId/portins/1/loas/test.txt", "11111", {"Content-Type": "text/plain"}).reply(400);
       order.updateFile("test.txt", new Buffer.from("11111", "utf8"), "text/plain", function(err){
         if(err){
-          return done();
+          err.message.should.equal("Http code 400");
+          return done(err);
         }
         done(new Error("An error is estimated"));
       });
