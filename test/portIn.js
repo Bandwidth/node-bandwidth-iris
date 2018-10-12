@@ -407,7 +407,7 @@ describe("PortIn", function(){
         if(err){
           return done(err);
         }
-        fileName.should.equal("");
+        fileName.should.equal("test.txt");
         done();
       });
     });
@@ -446,7 +446,7 @@ describe("PortIn", function(){
         if(err){
           return done(err);
         }
-        fileName.should.equal("");
+        fileName.should.equal("test.txt");
         done();
       });
     });
