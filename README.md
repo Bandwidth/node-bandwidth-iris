@@ -4,6 +4,17 @@
 
 NodeJs Client library for IRIS / BBS API
 
+## Supported Versions
+This SDK stable for node versions 7 and above
+
+| Version                        | Support Level            |
+|:-------------------------------|:-------------------------|
+| <7                        | Supported              |
+| 7.*                            | Supported              |
+| 8.*                            | Supported                |
+| 9.*                            | Supported              |
+| 10.4.1                            | Supported              |
+
 ## Install
 
 Run
