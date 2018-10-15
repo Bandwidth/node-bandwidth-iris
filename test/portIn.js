@@ -403,7 +403,7 @@ describe("PortIn", function(){
       fs.unlink(tmpFile, done);
     });
     it("should upload file to the server (via buffer)", function(done){
-      order.createFile(new Buffer("12345", "utf8"), "text/plain", function(err, fileName){
+      order.createFile(new Buffer.from("12345", "utf8"), "text/plain", function(err, fileName){
         if(err){
           return done(err);
         }
@@ -432,17 +432,17 @@ describe("PortIn", function(){
     it("should fail on error status code", function(done){
       nock.cleanAll();
       helper.nock().post("/v1.0/accounts/FakeAccountId/portins/1/loas", "11111", {"Content-Type": "text/plain"}).reply(400);
-      order.createFile(new Buffer("11111", "utf8"), "text/plain", function(err, fileName){
+      order.createFile(new Buffer.from("11111", "utf8"), "text/plain", function(err, fileName){
         if(err){
           return done();
         }
-        done(new Error("An error is estimated"));
+        done(new Error("An error was expected"));
       });
     });
     it("should upload file to the server (default media type)", function(done){
       nock.cleanAll();
       helper.nock().post("/v1.0/accounts/FakeAccountId/portins/1/loas", "12345", {"Content-Type": "application/octet-stream"}).reply(200, helper.xml.fileCreated, {"Content-Type": "application/xml"});
-      order.createFile(new Buffer("12345", "utf8"), function(err, fileName){
+      order.createFile(new Buffer.from("12345", "utf8"), function(err, fileName){
         if(err){
           return done(err);
         }
@@ -465,7 +465,7 @@ describe("PortIn", function(){
       fs.unlink(tmpFile, done);
     });
     it("should upload file to the server (via buffer)", function(done){
-      order.updateFile("test.txt", new Buffer("12345", "utf8"), "text/plain", done);
+      order.updateFile("test.txt", new Buffer.from("12345", "utf8"), "text/plain", done);
     });
     it("should upload file to the server (via file path)", function(done){
       order.updateFile("test.txt", tmpFile, "text/plain", done);
@@ -476,17 +476,17 @@ describe("PortIn", function(){
     it("should fail on error status code", function(done){
       nock.cleanAll();
       helper.nock().put("/v1.0/accounts/FakeAccountId/portins/1/loas/test.txt", "11111", {"Content-Type": "text/plain"}).reply(400);
-      order.updateFile("test.txt", new Buffer("11111", "utf8"), "text/plain", function(err){
+      order.updateFile("test.txt", new Buffer.from("11111", "utf8"), "text/plain", function(err){
         if(err){
           return done();
         }
-        done(new Error("An error is estimated"));
+        done(new Error("An error was expected"));
       });
     });
     it("should upload file to the server (default media type)", function(done){
       nock.cleanAll();
       helper.nock().put("/v1.0/accounts/FakeAccountId/portins/1/loas/test.txt", "12345", {"Content-Type": "application/octet-stream"}).reply(200, helper.xml.fileCreated, {"Content-Type": "application/xml"});
-      order.updateFile("test.txt", new Buffer("12345", "utf8"), done);
+      order.updateFile("test.txt", new Buffer.from("12345", "utf8"), done);
     });
   });
 });
