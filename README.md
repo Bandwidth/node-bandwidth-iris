@@ -9,7 +9,7 @@ This SDK stable for node versions 7 and above
 
 | Version                        | Support Level            |
 |:-------------------------------|:-------------------------|
-| <7                        | Supported              |
+| <7                        | Unsupported              |
 | 7.*                            | Supported              |
 | 8.*                            | Supported                |
 | 9.*                            | Supported              |
