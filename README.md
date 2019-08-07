@@ -15,6 +15,11 @@ This SDK stable for node versions 7 and above
 | 9.*                            | Supported              |
 | 10.4.1                            | Supported              |
 
+## Release Notes
+| Version | Notes |
+|:---|:---|
+| 1.0.1 | Changed default base url to `https://dashboard.bandwidth.com/api` |
+
 ## Install
 
 Run

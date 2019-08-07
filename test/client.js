@@ -18,7 +18,7 @@ describe("client tests", function(){
   describe("#makeRequest", function(){
     var client = new Client("accountId", "user", "password");
     it("should make GET request and parse output xml data", function(done){
-      var span = nock("https://api.inetwork.com").get("/v1.0/test")
+      var span = nock("https://dashboard.bandwidth.com").get("/api/v1.0/test")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>test</Test></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("get", "/test", function(err, r){
         if(err){
@@ -35,7 +35,7 @@ describe("client tests", function(){
         userName: "user",
         password: "password"
       });
-      var span = nock("https://api.inetwork.com").get("/v1.0/test")
+      var span = nock("https://dashboard.bandwidth.com").get("/api/v1.0/test")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>test</Test></Response>", {"Content-Type": "application/xml"});
       c.makeRequest("get", "/test", function(err, r){
         if(err){
@@ -46,13 +46,13 @@ describe("client tests", function(){
       });
     });
     it("should make GET request and handle requests without output", function(done){
-      var span = nock("https://api.inetwork.com").get("/v1.0/test")
+      var span = nock("https://dashboard.bandwidth.com").get("/api/v1.0/test")
         .reply(200);
       client.makeRequest("get", "/test", done);
     });
 
     it("should make GET request and handle error status", function(done){
-      var span = nock("https://api.inetwork.com").get("/v1.0/test")
+      var span = nock("https://dashboard.bandwidth.com").get("/api/v1.0/test")
         .reply(400);
       client.makeRequest("get", "/test", function(err, r){
         if(err){
@@ -62,7 +62,7 @@ describe("client tests", function(){
       });
     });
     it("should make GET request with query and parse output xml data", function(done){
-      var span = nock("https://api.inetwork.com").get("/v1.0/test?param1=1&param2=test&param3=true")
+      var span = nock("https://dashboard.bandwidth.com").get("/api/v1.0/test?param1=1&param2=test&param3=true")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>test</Test><Number>1234</Number><Bool>true</Bool></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("get", "/test", {
         param1: 1,
@@ -79,7 +79,7 @@ describe("client tests", function(){
       });
     });
     it("should make GET request with index  and parse output xml data", function(done){
-      var span = nock("https://api.inetwork.com").get("/v1.0/test/10")
+      var span = nock("https://dashboard.bandwidth.com").get("/api/v1.0/test/10")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>test1</Test><Test>test2</Test><Test>1234567890</Test></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("get", "/test", null, "10", function(err, r){
         if(err){
@@ -90,7 +90,7 @@ describe("client tests", function(){
       });
     });
     it("should make POST request and parse output xml data", function(done){
-      var span = nock("https://api.inetwork.com").post("/v1.0/test", "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<Root>\n  <Test1>test1</Test1>\n  <Test1>test2</Test1>\n  <el>2014-11-20T00:00:00.000Z</el>\n</Root>")
+      var span = nock("https://dashboard.bandwidth.com").post("/api/v1.0/test", "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<Root>\n  <Test1>test1</Test1>\n  <Test1>test2</Test1>\n  <el>2014-11-20T00:00:00.000Z</el>\n</Root>")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>2014-11-19T13:44:38.123Z</Test></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("post", "/test", {
         root: {
@@ -108,7 +108,7 @@ describe("client tests", function(){
       });
     });
     it("should make PUT request and parse output xml data", function(done){
-      var span = nock("https://api.inetwork.com").put("/v1.0/test", "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<Root>\n  <Test1>test1</Test1>\n  <BoolValue>false</BoolValue>\n</Root>")
+      var span = nock("https://dashboard.bandwidth.com").put("/api/v1.0/test", "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<Root>\n  <Test1>test1</Test1>\n  <BoolValue>false</BoolValue>\n</Root>")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>test</Test></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("put", "/test", {
         root: {
@@ -124,7 +124,7 @@ describe("client tests", function(){
       });
     });
     it("should make DELETE request and parse output xml data", function(done){
-      var span = nock("https://api.inetwork.com").delete("/v1.0/test")
+      var span = nock("https://dashboard.bandwidth.com").delete("/api/v1.0/test")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test>test</Test></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("delete", "/test", function(err, r){
         if(err){
@@ -135,7 +135,7 @@ describe("client tests", function(){
       });
     });
     it("should fail if output contains ErrorCode and Description", function(done){
-      var span = nock("https://api.inetwork.com").get("/v1.0/test?param1=1&param2=test&param3=true")
+      var span = nock("https://dashboard.bandwidth.com").get("/api/v1.0/test?param1=1&param2=test&param3=true")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test><ErrorCode>400</ErrorCode><Description>Error</Description></Test></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("get", "/test", {
         param1: 1,
@@ -151,7 +151,7 @@ describe("client tests", function(){
       });
     });
     it("should fail if output contains element Error with Code and Description", function(done){
-      var span = nock("https://api.inetwork.com").get("/v1.0/test?param1=1&param2=test&param3=true")
+      var span = nock("https://dashboard.bandwidth.com").get("/api/v1.0/test?param1=1&param2=test&param3=true")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test><Error><Code>400</Code><Description>Error</Description></Error></Test></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("get", "/test", {
         param1: 1,
@@ -167,7 +167,7 @@ describe("client tests", function(){
       });
     });
     it("should fail if output contains elements Errors with Code and Description", function(done){
-      var span = nock("https://api.inetwork.com").get("/v1.0/test?param1=1&param2=test&param3=true")
+      var span = nock("https://dashboard.bandwidth.com").get("/api/v1.0/test?param1=1&param2=test&param3=true")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test><Errors><Code>400</Code><Description>Error</Description></Errors><Errors><Code>401</Code><Description>Error1</Description></Errors></Test></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("get", "/test", {
         param1: 1,
@@ -186,7 +186,7 @@ describe("client tests", function(){
       });
     });
     it("should fail if output contains elements Errors with Code and Description (for 1 element) ", function(done){
-      var span = nock("https://api.inetwork.com").get("/v1.0/test?param1=1&param2=test&param3=true")
+      var span = nock("https://dashboard.bandwidth.com").get("/api/v1.0/test?param1=1&param2=test&param3=true")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test><Errors><Code>400</Code><Description>Error</Description></Errors></Test></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("get", "/test", {
         param1: 1,
@@ -204,7 +204,7 @@ describe("client tests", function(){
       });
     });
     it("should fail if output contains elements resultCode and resultMessage", function(done){
-      var span = nock("https://api.inetwork.com").get("/v1.0/test?param1=1&param2=test&param3=true")
+      var span = nock("https://dashboard.bandwidth.com").get("/api/v1.0/test?param1=1&param2=test&param3=true")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test><resultCode>400</resultCode><resultMessage>Error</resultMessage></Test></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("get", "/test", {
         param1: 1,
@@ -220,7 +220,7 @@ describe("client tests", function(){
       });
     });
     it("should fail if output contains elements resultCode and resultMessage (more deep)", function(done){
-      var span = nock("https://api.inetwork.com").get("/v1.0/test?param1=1&param2=test&param3=true")
+      var span = nock("https://dashboard.bandwidth.com").get("/api/v1.0/test?param1=1&param2=test&param3=true")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Tests><Test></Test><Test><resultCode>400</resultCode><resultMessage>Error</resultMessage></Test></Tests></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("get", "/test", {
         param1: 1,
@@ -236,7 +236,7 @@ describe("client tests", function(){
       });
     });
     it("should not fail if resultCode == 0", function(done){
-      var span = nock("https://api.inetwork.com").get("/v1.0/test?param1=1&param2=test&param3=true")
+      var span = nock("https://dashboard.bandwidth.com").get("/api/v1.0/test?param1=1&param2=test&param3=true")
         .reply(200, "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Response><Test><resultCode>0</resultCode><resultMessage>Completed</resultMessage></Test></Response>", {"Content-Type": "application/xml"});
       client.makeRequest("get", "/test", {
         param1: 1,
@@ -288,7 +288,7 @@ describe("client tests", function(){
         '</OrderResponse>'
       ].join('');
   
-      var span = nock("https://api.inetwork.com").get("/v1.0/test?param1=1&param2=test&param3=true")
+      var span = nock("https://dashboard.bandwidth.com").get("/api/v1.0/test?param1=1&param2=test&param3=true")
         .reply(200, responseXml, {"Content-Type": "application/xml"})
       client.makeRequest("get", "/test", {
         param1: 1,

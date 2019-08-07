@@ -1,6 +1,6 @@
 {
   "name": "bandwidth-iris",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NodeJs Client library for IRIS / BBS API",
   "main": "index.js",
   "scripts": {
