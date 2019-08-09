@@ -52,7 +52,7 @@ describe("Tn", function(){
   });
   describe("#list", function() {
     it("should return a list", function(done){
-      var span = helper.nock().get("/v1.0/tns?city=CARY").reply(200, helper.xml.tns, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/v1.0/tns?city=CARY&page=1&size=500").reply(200, helper.xml.tns, {"Content-Type": "application/xml"});
       Tn.list({city:"CARY"}, function(err, res){
         span.isDone().should.be.true;
         res.telephoneNumbers.should.be.ok;
