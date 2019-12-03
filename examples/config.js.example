@@ -1,5 +1,5 @@
 module.exports = {
-  "apiEndPoint":"https://api.inetwork.com",
+  "apiEndPoint":"https://dashboard.bandwidth.com/api",
   "accountId":"",
   "userName":"",
   "password":"",

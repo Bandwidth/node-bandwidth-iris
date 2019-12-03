@@ -16,7 +16,7 @@ describe("LnpChecker", function(){
     it("should check numbers", function(done){
       var numbers = ["1111", "2222"];
       var data = {numberPortabilityRequest: {tnList:{tn: numbers}}};
-      var span = helper.nock().post("/v1.0/accounts/FakeAccountId/lnpchecker?fullCheck=true", helper.buildXml(data)).reply(200, helper.xml.lnpCheck, {"Content-Type": "application/xml"});
+      var span = helper.nock().post("/accounts/FakeAccountId/lnpchecker?fullCheck=true", helper.buildXml(data)).reply(200, helper.xml.lnpCheck, {"Content-Type": "application/xml"});
       LnpChecker.check(helper.createClient(), numbers, true,  function(err, result){
         if(err){
           return done(err);
@@ -31,7 +31,7 @@ describe("LnpChecker", function(){
     it("should check numbers (with default client)", function(done){
       var numbers = ["1111", "2222"];
       var data = {numberPortabilityRequest: {tnList:{tn: numbers}}};
-      var span = helper.nock().post("/v1.0/accounts/FakeAccountId/lnpchecker?fullCheck=true", helper.buildXml(data)).reply(200, helper.xml.lnpCheck, {"Content-Type": "application/xml"});
+      var span = helper.nock().post("/accounts/FakeAccountId/lnpchecker?fullCheck=true", helper.buildXml(data)).reply(200, helper.xml.lnpCheck, {"Content-Type": "application/xml"});
       LnpChecker.check(numbers, true,  function(err, result){
         if(err){
           return done(err);
@@ -46,7 +46,7 @@ describe("LnpChecker", function(){
     it("should check numbers (with omitted fullCheck)", function(done){
       var numbers = ["1111", "2222"];
       var data = {numberPortabilityRequest: {tnList:{tn: numbers}}};
-      var span = helper.nock().post("/v1.0/accounts/FakeAccountId/lnpchecker?fullCheck=false", helper.buildXml(data)).reply(200, helper.xml.lnpCheck, {"Content-Type": "application/xml"});
+      var span = helper.nock().post("/accounts/FakeAccountId/lnpchecker?fullCheck=false", helper.buildXml(data)).reply(200, helper.xml.lnpCheck, {"Content-Type": "application/xml"});
       LnpChecker.check(helper.createClient(), numbers, function(err, result){
         if(err){
           return done(err);
@@ -61,7 +61,7 @@ describe("LnpChecker", function(){
     it("should check numbers (with default client and ommited fullCheck)", function(done){
       var numbers = ["1111", "2222"];
       var data = {numberPortabilityRequest: {tnList:{tn: numbers}}};
-      var span = helper.nock().post("/v1.0/accounts/FakeAccountId/lnpchecker?fullCheck=false", helper.buildXml(data)).reply(200, helper.xml.lnpCheck, {"Content-Type": "application/xml"});
+      var span = helper.nock().post("/accounts/FakeAccountId/lnpchecker?fullCheck=false", helper.buildXml(data)).reply(200, helper.xml.lnpCheck, {"Content-Type": "application/xml"});
       LnpChecker.check(numbers, function(err, result){
         if(err){
           return done(err);

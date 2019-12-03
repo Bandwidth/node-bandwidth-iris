@@ -17,7 +17,7 @@ module.exports = {
   },
 
   nock: function(){
-    return nock("https://api.inetwork.com");
+    return nock("https://dashboard.bandwidth.com/api");
   },
 
   xml: xml

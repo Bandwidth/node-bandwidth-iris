@@ -14,7 +14,7 @@ describe("Subscription", function(){
   });
   describe("#list", function(){
     it("should return list of subscriptions", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/subscriptions").reply(200, helper.xml.subscriptions, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/subscriptions").reply(200, helper.xml.subscriptions, {"Content-Type": "application/xml"});
       Subscription.list(helper.createClient(), function(err, list){
         if(err){
           return done(err);
@@ -27,7 +27,7 @@ describe("Subscription", function(){
       });
     });
     it("should return list of subscriptions (with default client)", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/subscriptions").reply(200, helper.xml.subscriptions, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/subscriptions").reply(200, helper.xml.subscriptions, {"Content-Type": "application/xml"});
       Subscription.list(function(err, list){
         if(err){
           return done(err);
@@ -41,7 +41,7 @@ describe("Subscription", function(){
     });
 
     it("should fail for error status code", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/subscriptions").reply(400);
+      helper.nock().get("/accounts/FakeAccountId/subscriptions").reply(400);
       Subscription.list(helper.createClient(), function(err, list){
         if(err){
           return done();
@@ -52,7 +52,7 @@ describe("Subscription", function(){
   });
   describe("#get", function(){
     it("should return a subscription", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/subscriptions/1").reply(200, helper.xml.subscriptions, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/subscriptions/1").reply(200, helper.xml.subscriptions, {"Content-Type": "application/xml"});
       Subscription.get(helper.createClient(), "1",  function(err, item){
         if(err){
           return done(err);
@@ -64,7 +64,7 @@ describe("Subscription", function(){
       });
     });
     it("should return a subscription (with default client)", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/subscriptions/1").reply(200, helper.xml.subscriptions, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/subscriptions/1").reply(200, helper.xml.subscriptions, {"Content-Type": "application/xml"});
       Subscription.get(1,  function(err, item){
         if(err){
           return done(err);
@@ -76,7 +76,7 @@ describe("Subscription", function(){
       });
     });
     it("should fail for error status code", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/subscriptions/1").reply(400);
+      var span = helper.nock().get("/accounts/FakeAccountId/subscriptions/1").reply(400);
       Subscription.get(helper.createClient(), "1",  function(err, item){
         if(err){
           return done();
@@ -88,8 +88,8 @@ describe("Subscription", function(){
   describe("#create", function(){
     it("should create a subscription", function(done){
       var data = {name: "Test Subscription", description: "A Site Description"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/subscriptions", helper.buildXml({subscription: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/subscriptions/1"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/subscriptions/1").reply(200, helper.xml.subscriptions, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/subscriptions", helper.buildXml({subscription: data})).reply(201, "", {"Location": "/accounts/FakeAccountId/subscriptions/1"});
+      helper.nock().get("/accounts/FakeAccountId/subscriptions/1").reply(200, helper.xml.subscriptions, {"Content-Type": "application/xml"});
       Subscription.create(helper.createClient(), data,  function(err, item){
         if(err){
           return done(err);
@@ -101,8 +101,8 @@ describe("Subscription", function(){
     });
     it("should create a subscription (with default client)", function(done){
       var data = {name: "Test Subscription", description: "A Site Description"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/subscriptions", helper.buildXml({subscription: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/subscriptions/1"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/subscriptions/1").reply(200, helper.xml.subscriptions, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/subscriptions", helper.buildXml({subscription: data})).reply(201, "", {"Location": "/accounts/FakeAccountId/subscriptions/1"});
+      helper.nock().get("/accounts/FakeAccountId/subscriptions/1").reply(200, helper.xml.subscriptions, {"Content-Type": "application/xml"});
       Subscription.create(data,  function(err, item){
         if(err){
           return done(err);
@@ -114,7 +114,7 @@ describe("Subscription", function(){
     });
     it("should fail on error status code", function(done){
       var data = {name: "Test Subscription", description: "A Site Description"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/subscriptions").reply(400, "");
+      helper.nock().post("/accounts/FakeAccountId/subscriptions").reply(400, "");
       Subscription.create(helper.createClient(), data,  function(err, item){
         if(err){
           return done();
@@ -126,7 +126,7 @@ describe("Subscription", function(){
   describe("#update", function(){
     it("should update a subscription", function(done){
       var data = {name: "Test Subscription" };
-      helper.nock().put("/v1.0/accounts/FakeAccountId/subscriptions/1", helper.buildXml({subscription: data})).reply(200);
+      helper.nock().put("/accounts/FakeAccountId/subscriptions/1", helper.buildXml({subscription: data})).reply(200);
       var subscription = new Subscription();
       subscription.id = 1;
       subscription.client = helper.createClient();
@@ -135,7 +135,7 @@ describe("Subscription", function(){
   });
   describe("#delete", function(){
     it("should delete a subscription", function(done){
-      helper.nock().delete("/v1.0/accounts/FakeAccountId/subscriptions/1").reply(200);
+      helper.nock().delete("/accounts/FakeAccountId/subscriptions/1").reply(200);
       var subscription = new Subscription();
       subscription.id = 1;
       subscription.client = helper.createClient();

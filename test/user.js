@@ -14,7 +14,7 @@ describe("User", function(){
   });
   describe("#list", function(){
     it("should return list of users", function(done){
-      var span = helper.nock().get("/v1.0/users").reply(200, helper.xml.users, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/users").reply(200, helper.xml.users, {"Content-Type": "application/xml"});
       User.list(helper.createClient(), function(err, list){
         if(err){
           return done(err);
@@ -27,7 +27,7 @@ describe("User", function(){
       });
     });
     it("should return list of sites (with default client)", function(done){
-      var span = helper.nock().get("/v1.0/users").reply(200, helper.xml.users, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/users").reply(200, helper.xml.users, {"Content-Type": "application/xml"});
       User.list(function(err, list){
         if(err){
           return done(err);

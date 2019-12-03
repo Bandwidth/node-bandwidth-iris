@@ -14,7 +14,7 @@ describe("TnReservation", function(){
   });
   describe("#get", function(){
     it("should return a tnreservation", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/tnreservation/1").reply(200, helper.xml.tnReservation, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/tnreservation/1").reply(200, helper.xml.tnReservation, {"Content-Type": "application/xml"});
       TnReservation.get(helper.createClient(), "1",  function(err, item){
         if(err){
           return done(err);
@@ -26,7 +26,7 @@ describe("TnReservation", function(){
       });
     });
     it("should return a tnreservation (with default client)", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/tnreservation/1").reply(200, helper.xml.tnReservation, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/tnreservation/1").reply(200, helper.xml.tnReservation, {"Content-Type": "application/xml"});
       TnReservation.get(1,  function(err, item){
         if(err){
           return done(err);
@@ -38,7 +38,7 @@ describe("TnReservation", function(){
       });
     });
     it("should fail for error status code", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/tnreservation/1").reply(400);
+      var span = helper.nock().get("/accounts/FakeAccountId/tnreservation/1").reply(400);
       TnReservation.get(helper.createClient(), "1",  function(err, item){
         if(err){
           return done();
@@ -50,8 +50,8 @@ describe("TnReservation", function(){
   describe("#create", function(){
     it("should create a  tnreservation", function(done){
       var data = {accountId: "111", reservedTn: "000"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/tnreservation", helper.buildXml({reservation: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/tnreservation/1"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/tnreservation/1").reply(200, helper.xml.tnReservation, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/tnreservation", helper.buildXml({reservation: data})).reply(201, "", {"Location": "/accounts/FakeAccountId/tnreservation/1"});
+      helper.nock().get("/accounts/FakeAccountId/tnreservation/1").reply(200, helper.xml.tnReservation, {"Content-Type": "application/xml"});
       TnReservation.create(helper.createClient(), data,  function(err, item){
         if(err){
           return done(err);
@@ -63,8 +63,8 @@ describe("TnReservation", function(){
     });
     it("should create a  tnreservation (with default client)", function(done){
       var data = {accountId: "111", reservedTn: "000"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/tnreservation", helper.buildXml({reservation: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/tnreservation/1"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/tnreservation/1").reply(200, helper.xml.tnReservation, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/tnreservation", helper.buildXml({reservation: data})).reply(201, "", {"Location": "/accounts/FakeAccountId/tnreservation/1"});
+      helper.nock().get("/accounts/FakeAccountId/tnreservation/1").reply(200, helper.xml.tnReservation, {"Content-Type": "application/xml"});
       TnReservation.create(data,  function(err, item){
         if(err){
           return done(err);
@@ -76,7 +76,7 @@ describe("TnReservation", function(){
     });
     it("should fail on error status code", function(done){
       var data = {accountId: "111", reservedTn: "000"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/tnreservation").reply(400, "");
+      helper.nock().post("/accounts/FakeAccountId/tnreservation").reply(400, "");
       TnReservation.create(helper.createClient(), data,  function(err, item){
         if(err){
           return done();
@@ -87,7 +87,7 @@ describe("TnReservation", function(){
   });
   describe("#delete", function(){
     it("should delete a tnreservation", function(done){
-      helper.nock().delete("/v1.0/accounts/FakeAccountId/tnreservation/1").reply(200);
+      helper.nock().delete("/accounts/FakeAccountId/tnreservation/1").reply(200);
       var tnreservation = new TnReservation();
       tnreservation.id = 1;
       tnreservation.client = helper.createClient();

@@ -14,7 +14,7 @@ describe("DiscNumbers", function(){
   });
   describe("#list", function(){
     it("should return disc numbers", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/discnumbers").reply(200, helper.xml.discNumbers, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/discnumbers").reply(200, helper.xml.discNumbers, {"Content-Type": "application/xml"});
       DiscNumber.list(helper.createClient(), {}, function(err, res){
         if(err){
           return done(err);

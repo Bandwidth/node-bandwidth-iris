@@ -14,7 +14,7 @@ describe("Dlda", function(){
   });
   describe("#list", function(){
     it("should return a list of Dlda Orders ", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/dldas").reply(200, helper.xml.dldas, {"Content-Type":"application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/dldas").reply(200, helper.xml.dldas, {"Content-Type":"application/xml"});
       Dlda.list(helper.createClient(), {}, function(err,list){
         if(err){
           return done(err);
@@ -26,7 +26,7 @@ describe("Dlda", function(){
   });
   describe("#get", function(){
     it("should get dlda successfully", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/dldas/1").reply(200, helper.xml.dlda, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/dldas/1").reply(200, helper.xml.dlda, {"Content-Type": "application/xml"});
       Dlda.get(helper.createClient(), "1", function(err, dlda){
         if(err){
           return done(err);
@@ -42,8 +42,8 @@ describe("Dlda", function(){
     it("should create dlda successfully", function(done){
       var data = {
       }
-      helper.nock().post("/v1.0/accounts/FakeAccountId/dldas", helper.buildXml({dldaOrder: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/dlda/1"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/dldas/1").reply(200, helper.xml.dlda, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/dldas", helper.buildXml({dldaOrder: data})).reply(201, "", {"Location": "/accounts/FakeAccountId/dlda/1"});
+      helper.nock().get("/accounts/FakeAccountId/dldas/1").reply(200, helper.xml.dlda, {"Content-Type": "application/xml"});
       Dlda.create(helper.createClient(), data, function(err,dlda){
         if(err){
           return done(err);
@@ -56,7 +56,7 @@ describe("Dlda", function(){
   });
   describe("#getHistory", function(){
     it("should return history", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/dldas/1/history").reply(200, helper.xml.orderHistory, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/dldas/1/history").reply(200, helper.xml.orderHistory, {"Content-Type": "application/xml"});
       var order = new Dlda();
       order.id = 1;
       order.client = helper.createClient();

@@ -14,7 +14,7 @@ describe("Tn", function(){
   });
   describe("#get", function(){
     it("should return a tn", function(done){
-      var span = helper.nock().get("/v1.0/tns/1234").reply(200, helper.xml.tn, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/tns/1234").reply(200, helper.xml.tn, {"Content-Type": "application/xml"});
       Tn.get(helper.createClient(), "1234", function(err, item){
         if(err){
           return done(err);
@@ -27,7 +27,7 @@ describe("Tn", function(){
       });
     });
     it("should return a tn (with default client)", function(done){
-      var span = helper.nock().get("/v1.0/tns/1234").reply(200, helper.xml.tn, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/tns/1234").reply(200, helper.xml.tn, {"Content-Type": "application/xml"});
       Tn.get("1234", function(err, item){
         if(err){
           return done(err);
@@ -41,7 +41,7 @@ describe("Tn", function(){
     });
 
     it("should fail for error status code", function(done){
-      helper.nock().get("/v1.0/tns/1234").reply(400);
+      helper.nock().get("/tns/1234").reply(400);
       Tn.get(helper.createClient(), "1234", function(err){
         if(err){
           return done();
@@ -52,7 +52,7 @@ describe("Tn", function(){
   });
   describe("#list", function() {
     it("should return a list", function(done){
-      var span = helper.nock().get("/v1.0/tns?city=CARY&page=1&size=500").reply(200, helper.xml.tns, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/tns?city=CARY&page=1&size=500").reply(200, helper.xml.tns, {"Content-Type": "application/xml"});
       Tn.list({city:"CARY"}, function(err, res){
         span.isDone().should.be.true;
         res.telephoneNumbers.should.be.ok;
@@ -64,7 +64,7 @@ describe("Tn", function(){
   });
   describe("#getTnDetails", function(){
     it("should return tn details", function(done){
-      var span = helper.nock().get("/v1.0/tns/2018981023/tndetails").reply(200, helper.xml.tnDetails, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/tns/2018981023/tndetails").reply(200, helper.xml.tnDetails, {"Content-Type": "application/xml"});
       var tn = new Tn();
       tn.client = helper.createClient();
       tn.telephoneNumber = "2018981023";
@@ -80,7 +80,7 @@ describe("Tn", function(){
   });
   describe("#getSites", function(){
     it("should return sites", function(done){
-      var span = helper.nock().get("/v1.0/tns/1234/sites").reply(200, helper.xml.tnSites, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/tns/1234/sites").reply(200, helper.xml.tnSites, {"Content-Type": "application/xml"});
       var tn = new Tn();
       tn.client = helper.createClient();
       tn.telephoneNumber = "1234";
@@ -97,7 +97,7 @@ describe("Tn", function(){
   });
   describe("#getSipPeers", function(){
     it("should return peers", function(done){
-      var span = helper.nock().get("/v1.0/tns/1234/sippeers").reply(200, helper.xml.tnSipPeers, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/tns/1234/sippeers").reply(200, helper.xml.tnSipPeers, {"Content-Type": "application/xml"});
       var tn = new Tn();
       tn.client = helper.createClient();
       tn.telephoneNumber = "1234";
@@ -114,7 +114,7 @@ describe("Tn", function(){
   });
   describe("#getRateCenter", function(){
     it("should return rate center", function(done){
-      var span = helper.nock().get("/v1.0/tns/1234/ratecenter").reply(200, helper.xml.tnRateCenter, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/tns/1234/ratecenter").reply(200, helper.xml.tnRateCenter, {"Content-Type": "application/xml"});
       var tn = new Tn();
       tn.client = helper.createClient();
       tn.telephoneNumber = "1234";
@@ -129,7 +129,7 @@ describe("Tn", function(){
       });
     });
     it("should fail for error status code", function(done){
-      helper.nock().get("/v1.0/tns/1234/ratecenter").reply(400);
+      helper.nock().get("/tns/1234/ratecenter").reply(400);
       var tn = new Tn();
       tn.client = helper.createClient();
       tn.telephoneNumber = "1234";

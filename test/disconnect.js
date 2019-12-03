@@ -14,18 +14,18 @@ describe("Disconnect", function(){
   });
   describe("#list", function(){
     it("should return list of orders", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/disconnects").reply(200, helper.xml.order, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/disconnects").reply(200, helper.xml.order, {"Content-Type": "application/xml"});
       var client = helper.createClient();
       Disconnect.list(client, {}, done);
     });
     it("should return list of orders (with default client)", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/disconnects").reply(200, helper.xml.order, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/disconnects").reply(200, helper.xml.order, {"Content-Type": "application/xml"});
       Disconnect.list({}, done);
     });
   });
   describe("#getNotes", function(){
     it("should return notes", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/disconnects/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/disconnects/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
       var order = new Disconnect();
       order.id = 1;
       order.client = helper.createClient();
@@ -41,7 +41,7 @@ describe("Disconnect", function(){
       });
     });
     it("should fail for error status code", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/disconnects/1/notes").reply(400);
+      helper.nock().get("/accounts/FakeAccountId/disconnects/1/notes").reply(400);
       var order = new Disconnect();
       order.id = 1;
       order.client = helper.createClient();
@@ -56,8 +56,8 @@ describe("Disconnect", function(){
   describe("#addNote", function(){
     it("should add new note", function(done){
       var data = {userId: "customer", description: "Test"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/disconnects/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/v1.0/accounts/FakeAccountId/portins/1/notes/11299"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/disconnects/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/disconnects/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/accounts/FakeAccountId/portins/1/notes/11299"});
+      helper.nock().get("/accounts/FakeAccountId/disconnects/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
       var order = new Disconnect();
       order.id = 1;
       order.client = helper.createClient();
@@ -73,8 +73,8 @@ describe("Disconnect", function(){
     });
     it("should fail on loading notes error", function(done){
       var data = {userId: "customer", description: "Test"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/disconnects/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/v1.0/accounts/FakeAccountId/portins/1/notes/11299"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/disconnects/1/notes").reply(500);
+      helper.nock().post("/accounts/FakeAccountId/disconnects/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/accounts/FakeAccountId/portins/1/notes/11299"});
+      helper.nock().get("/accounts/FakeAccountId/disconnects/1/notes").reply(500);
       var order = new Disconnect();
       order.id = 1;
       order.client = helper.createClient();
@@ -87,7 +87,7 @@ describe("Disconnect", function(){
     });
     it("should fail if location header is missing", function(done){
       var data = {userId: "customer", description: "Test"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/disconnects/1/notes", helper.buildXml({note: data})).reply(400);
+      helper.nock().post("/accounts/FakeAccountId/disconnects/1/notes", helper.buildXml({note: data})).reply(400);
       var order = new Disconnect();
       order.id = 1;
       order.client = helper.createClient();
@@ -101,7 +101,7 @@ describe("Disconnect", function(){
     });
     it("should fail on error status code", function(done){
       var data = {userId: "customer", description: "Test"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/disconnects/1/notes", helper.buildXml({note: data})).reply(400);
+      helper.nock().post("/accounts/FakeAccountId/disconnects/1/notes", helper.buildXml({note: data})).reply(400);
       var order = new Disconnect();
       order.id = 1;
       order.client = helper.createClient();
@@ -124,7 +124,7 @@ describe("Disconnect", function(){
          }
         }
       };
-      helper.nock().post("/v1.0/accounts/FakeAccountId/disconnects", helper.buildXml(data)).reply(200);
+      helper.nock().post("/accounts/FakeAccountId/disconnects", helper.buildXml(data)).reply(200);
       Disconnect.create(helper.createClient(), "test", ["111", "222"], done);
     });
     it("should disconnect numbers (with default client)", function(done){
@@ -137,7 +137,7 @@ describe("Disconnect", function(){
          }
         }
       };
-      helper.nock().post("/v1.0/accounts/FakeAccountId/disconnects", helper.buildXml(data)).reply(200);
+      helper.nock().post("/accounts/FakeAccountId/disconnects", helper.buildXml(data)).reply(200);
       Disconnect.create("test", ["111", "222"], done);
     });
   });

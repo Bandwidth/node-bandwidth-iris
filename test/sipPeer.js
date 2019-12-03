@@ -14,7 +14,7 @@ describe("SipPeer", function(){
   });
   describe("#list", function(){
     it("should return list of peers", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers").reply(200, helper.xml.sipPeers, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/sites/1/sippeers").reply(200, helper.xml.sipPeers, {"Content-Type": "application/xml"});
       SipPeer.list(helper.createClient(), 1, function(err, list){
         if(err){
           return done(err);
@@ -28,7 +28,7 @@ describe("SipPeer", function(){
       });
     });
     it("should return list of peers with default client", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers").reply(200, helper.xml.sipPeers, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/sites/1/sippeers").reply(200, helper.xml.sipPeers, {"Content-Type": "application/xml"});
       SipPeer.list(1, function(err, list){
         if(err){
           return done(err);
@@ -44,7 +44,7 @@ describe("SipPeer", function(){
   });
   describe("#get", function(){
     it("should return a peer", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10").reply(200, helper.xml.sipPeer, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/sites/1/sippeers/10").reply(200, helper.xml.sipPeer, {"Content-Type": "application/xml"});
       SipPeer.get(helper.createClient(), 1, 10, function(err, item){
         if(err){
           return done(err);
@@ -57,7 +57,7 @@ describe("SipPeer", function(){
       });
     });
     it("should return a peer with default client", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10").reply(200, helper.xml.sipPeer, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/sites/1/sippeers/10").reply(200, helper.xml.sipPeer, {"Content-Type": "application/xml"});
       SipPeer.get(1, 10, function(err, item){
         if(err){
           return done(err);
@@ -73,8 +73,8 @@ describe("SipPeer", function(){
   describe("#create", function(){
     it("should create a sip peer", function(done){
       var data = {peerName: "SIP Peer 1", description: "Sip Peer 1 description", siteId: 1};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/sites/1/sippeers", helper.buildXml({sipPeer: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/sites/1/sippeers/10"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10").reply(200, helper.xml.sipPeer, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/sites/1/sippeers", helper.buildXml({sipPeer: data})).reply(201, "", {"Location": "/accounts/FakeAccountId/sites/1/sippeers/10"});
+      helper.nock().get("/accounts/FakeAccountId/sites/1/sippeers/10").reply(200, helper.xml.sipPeer, {"Content-Type": "application/xml"});
       SipPeer.create(helper.createClient(), data, function(err, item){
         if(err){
           return done(err);
@@ -87,8 +87,8 @@ describe("SipPeer", function(){
     });
     it("should create a sip peer with default client", function(done){
       var data = {peerName: "SIP Peer 1", description: "Sip Peer 1 description", siteId: 1};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/sites/1/sippeers", helper.buildXml({sipPeer: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/sites/1/sippeers/10"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10").reply(200, helper.xml.sipPeer, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/sites/1/sippeers", helper.buildXml({sipPeer: data})).reply(201, "", {"Location": "/accounts/FakeAccountId/sites/1/sippeers/10"});
+      helper.nock().get("/accounts/FakeAccountId/sites/1/sippeers/10").reply(200, helper.xml.sipPeer, {"Content-Type": "application/xml"});
       SipPeer.create(data, function(err, item){
         if(err){
           return done(err);
@@ -102,7 +102,7 @@ describe("SipPeer", function(){
   });
   describe("#delete", function(){
     it("should remove a peer", function(done){
-      helper.nock().delete("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10").reply(200);
+      helper.nock().delete("/accounts/FakeAccountId/sites/1/sippeers/10").reply(200);
       var peer = new SipPeer();
       peer.client = helper.createClient();
       peer.siteId = 1;
@@ -110,7 +110,7 @@ describe("SipPeer", function(){
       peer.delete(done);
     });
     it("should fail for error status code", function(done){
-      helper.nock().delete("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10").reply(400);
+      helper.nock().delete("/accounts/FakeAccountId/sites/1/sippeers/10").reply(400);
       var peer = new SipPeer();
       peer.client = helper.createClient();
       peer.siteId = 1;
@@ -125,7 +125,7 @@ describe("SipPeer", function(){
   });
   describe("#getTns", function(){
     it("should return list of numbers", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10/tns").reply(200, helper.xml.sipPeerTns, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/sites/1/sippeers/10/tns").reply(200, helper.xml.sipPeerTns, {"Content-Type": "application/xml"});
       var peer = new SipPeer();
       peer.id = 10;
       peer.siteId = 1;
@@ -142,7 +142,7 @@ describe("SipPeer", function(){
     });
 
     it("should return a number", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10/tns/12345").reply(200, helper.xml.sipPeerTn, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/sites/1/sippeers/10/tns/12345").reply(200, helper.xml.sipPeerTn, {"Content-Type": "application/xml"});
       var peer = new SipPeer();
       peer.id = 10;
       peer.siteId = 1;
@@ -158,7 +158,7 @@ describe("SipPeer", function(){
     });
 
     it("should fail for error status code", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10/tns/12345").reply(400);
+      helper.nock().get("/accounts/FakeAccountId/sites/1/sippeers/10/tns/12345").reply(400);
       var peer = new SipPeer();
       peer.id = 10;
       peer.siteId = 1;
@@ -174,7 +174,7 @@ describe("SipPeer", function(){
   describe("#updateTns", function(){
     it("should update a number", function(done){
       var data = {fullNumber: "123456", rewriteUser: "test"};
-      var span = helper.nock().put("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10/tns/12345", helper.buildXml({sipPeerTelephoneNumber: data})).reply(200);
+      var span = helper.nock().put("/accounts/FakeAccountId/sites/1/sippeers/10/tns/12345", helper.buildXml({sipPeerTelephoneNumber: data})).reply(200);
       var peer = new SipPeer();
       peer.id = 10;
       peer.siteId = 1;
@@ -185,7 +185,7 @@ describe("SipPeer", function(){
   describe("#moveTns", function(){
     it("should move numbers", function(done){
       var data = ["111", "222"];
-      var span = helper.nock().post("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10/movetns", helper.buildXml({sipPeerTelephoneNumbers: {fullNumber: data}})).reply(200);
+      var span = helper.nock().post("/accounts/FakeAccountId/sites/1/sippeers/10/movetns", helper.buildXml({sipPeerTelephoneNumbers: {fullNumber: data}})).reply(200);
       var peer = new SipPeer();
       peer.id = 10;
       peer.siteId = 1;

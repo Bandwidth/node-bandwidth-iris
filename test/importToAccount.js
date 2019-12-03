@@ -17,7 +17,7 @@ describe("ImportToAccount", function(){
   });
   // describe("#getNotes", function(){
   //   it("should return notes", function(done){
-  //     helper.nock().get("/v1.0/accounts/FakeAccountId/importToAccounts/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
+  //     helper.nock().get("/accounts/FakeAccountId/importToAccounts/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
   //     var order = new ImportToAccount();
   //     order.id = 1;
   //     order.client = helper.createClient();
@@ -33,7 +33,7 @@ describe("ImportToAccount", function(){
   //     });
   //   });
   //   it("should fail for error status code", function(done){
-  //     helper.nock().get("/v1.0/accounts/FakeAccountId/importToAccounts/1/notes").reply(400);
+  //     helper.nock().get("/accounts/FakeAccountId/importToAccounts/1/notes").reply(400);
   //     var order = new ImportToAccount();
   //     order.id = 1;
   //     order.client = helper.createClient();
@@ -48,8 +48,8 @@ describe("ImportToAccount", function(){
   // describe("#addNote", function(){
   //   it("should add new note", function(done){
   //     var data = {userId: "customer", description: "Test"};
-  //     helper.nock().post("/v1.0/accounts/FakeAccountId/importToAccounts/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/v1.0/accounts/FakeAccountId/portins/1/notes/11299"});
-  //     helper.nock().get("/v1.0/accounts/FakeAccountId/importToAccounts/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
+  //     helper.nock().post("/accounts/FakeAccountId/importToAccounts/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/accounts/FakeAccountId/portins/1/notes/11299"});
+  //     helper.nock().get("/accounts/FakeAccountId/importToAccounts/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
   //     var order = new ImportToAccount();
   //     order.id = 1;
   //     order.client = helper.createClient();
@@ -65,8 +65,8 @@ describe("ImportToAccount", function(){
   //   });
   //   it("should fail on loading notes error", function(done){
   //     var data = {userId: "customer", description: "Test"};
-  //     helper.nock().post("/v1.0/accounts/FakeAccountId/importToAccounts/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/v1.0/accounts/FakeAccountId/portins/1/notes/11299"});
-  //     helper.nock().get("/v1.0/accounts/FakeAccountId/importToAccounts/1/notes").reply(500);
+  //     helper.nock().post("/accounts/FakeAccountId/importToAccounts/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/accounts/FakeAccountId/portins/1/notes/11299"});
+  //     helper.nock().get("/accounts/FakeAccountId/importToAccounts/1/notes").reply(500);
   //     var order = new ImportToAccount();
   //     order.id = 1;
   //     order.client = helper.createClient();
@@ -79,7 +79,7 @@ describe("ImportToAccount", function(){
   //   });
   //   it("should fail on error status code", function(done){
   //     var data = {userId: "customer", description: "Test"};
-  //     helper.nock().post("/v1.0/accounts/FakeAccountId/importToAccounts/1/notes", helper.buildXml({note: data})).reply(400);
+  //     helper.nock().post("/accounts/FakeAccountId/importToAccounts/1/notes", helper.buildXml({note: data})).reply(400);
   //     var order = new ImportToAccount();
   //     order.id = 1;
   //     order.client = helper.createClient();

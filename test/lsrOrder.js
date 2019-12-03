@@ -14,7 +14,7 @@ describe("LsrOrder", function(){
   });
   describe("#list", function(){
     it("should return a list of LsrOrders ", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/lsrorders").reply(200, helper.xml.lsrOrders, {"Content-Type":"application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/lsrorders").reply(200, helper.xml.lsrOrders, {"Content-Type":"application/xml"});
       LsrOrder.list(helper.createClient(), {}, function(err,list){
         if(err){
           return done(err);
@@ -26,7 +26,7 @@ describe("LsrOrder", function(){
   });
   describe("#get", function(){
     it("should get LsrOrder successfully", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/lsrorders/1").reply(200, helper.xml.lsrOrder, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/lsrorders/1").reply(200, helper.xml.lsrOrder, {"Content-Type": "application/xml"});
       LsrOrder.get(helper.createClient(), "1", function(err, lsrOrder){
         if(err){
           return done(err);
@@ -65,8 +65,8 @@ describe("LsrOrder", function(){
           telephoneNumber:["9192381848", "9192381467"]
         }
       }
-      helper.nock().post("/v1.0/accounts/FakeAccountId/lsrorders", helper.buildXml({lsrOrder: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/lsrorders/1"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/lsrorders/1").reply(200, helper.xml.lsrOrder, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/lsrorders", helper.buildXml({lsrOrder: data})).reply(201, "", {"Location": "/accounts/FakeAccountId/lsrorders/1"});
+      helper.nock().get("/accounts/FakeAccountId/lsrorders/1").reply(200, helper.xml.lsrOrder, {"Content-Type": "application/xml"});
       LsrOrder.create(helper.createClient(), data, function(err,lsrOrder){
         if(err){
           return done(err);
@@ -80,7 +80,7 @@ describe("LsrOrder", function(){
   describe("#update", function(){
     it("should update successfully", function(done){
       var data = {requestedFocDate:"2015-11-16"};
-      helper.nock().put("/v1.0/accounts/FakeAccountId/lsrorders/1", helper.buildXml({lsrOrder: data})).reply(200);
+      helper.nock().put("/accounts/FakeAccountId/lsrorders/1", helper.buildXml({lsrOrder: data})).reply(200);
       var order = new LsrOrder();
       order.id = "1";
       order.client = helper.createClient();

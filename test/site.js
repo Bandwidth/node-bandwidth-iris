@@ -14,7 +14,7 @@ describe("Site", function(){
   });
   describe("#list", function(){
     it("should return list of sites", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites").reply(200, helper.xml.sites, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/sites").reply(200, helper.xml.sites, {"Content-Type": "application/xml"});
       Site.list(helper.createClient(), function(err, list){
         if(err){
           return done(err);
@@ -28,7 +28,7 @@ describe("Site", function(){
       });
     });
     it("should return list of sites (with default client)", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites").reply(200, helper.xml.sites, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/sites").reply(200, helper.xml.sites, {"Content-Type": "application/xml"});
       Site.list(function(err, list){
         if(err){
           return done(err);
@@ -43,7 +43,7 @@ describe("Site", function(){
     });
 
     it("should fail for error status code", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/sites").reply(400);
+      helper.nock().get("/accounts/FakeAccountId/sites").reply(400);
       Site.list(helper.createClient(), function(err, list){
         if(err){
           return done();
@@ -54,7 +54,7 @@ describe("Site", function(){
   });
   describe("#get", function(){
     it("should return a site", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1").reply(200, helper.xml.site, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/sites/1").reply(200, helper.xml.site, {"Content-Type": "application/xml"});
       Site.get(helper.createClient(), "1",  function(err, item){
         if(err){
           return done(err);
@@ -67,7 +67,7 @@ describe("Site", function(){
       });
     });
     it("should return a site (with default client)", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1").reply(200, helper.xml.site, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/sites/1").reply(200, helper.xml.site, {"Content-Type": "application/xml"});
       Site.get(1,  function(err, item){
         if(err){
           return done(err);
@@ -80,7 +80,7 @@ describe("Site", function(){
       });
     });
     it("should fail for error status code", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1").reply(400);
+      var span = helper.nock().get("/accounts/FakeAccountId/sites/1").reply(400);
       Site.get(helper.createClient(), "1",  function(err, item){
         if(err){
           return done();
@@ -92,8 +92,8 @@ describe("Site", function(){
   describe("#create", function(){
     it("should create a  site", function(done){
       var data = {name: "Test Site", description: "A Site Description"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/sites", helper.buildXml({site: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/sites/1"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1").reply(200, helper.xml.site, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/sites", helper.buildXml({site: data})).reply(201, "", {"Location": "/accounts/FakeAccountId/sites/1"});
+      helper.nock().get("/accounts/FakeAccountId/sites/1").reply(200, helper.xml.site, {"Content-Type": "application/xml"});
       Site.create(helper.createClient(), data,  function(err, item){
         if(err){
           return done(err);
@@ -106,8 +106,8 @@ describe("Site", function(){
     });
     it("should create a  site (with default client)", function(done){
       var data = {name: "Test Site", description: "A Site Description"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/sites", helper.buildXml({site: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/sites/1"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1").reply(200, helper.xml.site, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/sites", helper.buildXml({site: data})).reply(201, "", {"Location": "/accounts/FakeAccountId/sites/1"});
+      helper.nock().get("/accounts/FakeAccountId/sites/1").reply(200, helper.xml.site, {"Content-Type": "application/xml"});
       Site.create(data,  function(err, item){
         if(err){
           return done(err);
@@ -120,7 +120,7 @@ describe("Site", function(){
     });
     it("should fail on error status code", function(done){
       var data = {name: "Test Site", description: "A Site Description"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/sites").reply(400, "");
+      helper.nock().post("/accounts/FakeAccountId/sites").reply(400, "");
       Site.create(helper.createClient(), data,  function(err, item){
         if(err){
           return done();
@@ -132,7 +132,7 @@ describe("Site", function(){
   describe("#update", function(){
     it("should update a site", function(done){
       var data = {name: "Test Site" };
-      helper.nock().put("/v1.0/accounts/FakeAccountId/sites/1", helper.buildXml({site: data})).reply(200);
+      helper.nock().put("/accounts/FakeAccountId/sites/1", helper.buildXml({site: data})).reply(200);
       var site = new Site();
       site.id = 1;
       site.client = helper.createClient();
@@ -141,7 +141,7 @@ describe("Site", function(){
   });
   describe("#delete", function(){
     it("should delete a site", function(done){
-      helper.nock().delete("/v1.0/accounts/FakeAccountId/sites/1").reply(200);
+      helper.nock().delete("/accounts/FakeAccountId/sites/1").reply(200);
       var site = new Site();
       site.id = 1;
       site.client = helper.createClient();
@@ -150,7 +150,7 @@ describe("Site", function(){
   });
   describe("#getSipPeers", function(){
     it("should return list of sippeers", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers").reply(200, helper.xml.sipPeers, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/sites/1/sippeers").reply(200, helper.xml.sipPeers, {"Content-Type": "application/xml"});
       var site = new Site();
       site.client = helper.createClient();
       site.id = "1";
@@ -167,7 +167,7 @@ describe("Site", function(){
       });
     });
     it("should fail on error status code", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers").reply(400);
+      helper.nock().get("/accounts/FakeAccountId/sites/1/sippeers").reply(400);
       var site = new Site();
       site.client = helper.createClient();
       site.id = "1";
@@ -181,7 +181,7 @@ describe("Site", function(){
   });
   describe("#getSipPeer", function(){
     it("should return a sip peer", function(done){
-      var span = helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10").reply(200, helper.xml.sipPeer, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/accounts/FakeAccountId/sites/1/sippeers/10").reply(200, helper.xml.sipPeer, {"Content-Type": "application/xml"});
       var site = new Site();
       site.client = helper.createClient();
       site.id = "1";
@@ -197,7 +197,7 @@ describe("Site", function(){
       });
     });
     it("should fail on error status code", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10").reply(400);
+      helper.nock().get("/accounts/FakeAccountId/sites/1/sippeers/10").reply(400);
       var site = new Site();
       site.client = helper.createClient();
       site.id = "1";
@@ -212,8 +212,8 @@ describe("Site", function(){
   describe("#createSipPeer", function(){
     it("should create a sip peer", function(done){
       var data = {peerName: "SIP Peer 1", description: "Sip Peer 1 description"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/sites/1/sippeers", helper.buildXml({sipPeer: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/sites/1/sippeers/10"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/sippeers/10").reply(200, helper.xml.sipPeer, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/sites/1/sippeers", helper.buildXml({sipPeer: data})).reply(201, "", {"Location": "/accounts/FakeAccountId/sites/1/sippeers/10"});
+      helper.nock().get("/accounts/FakeAccountId/sites/1/sippeers/10").reply(200, helper.xml.sipPeer, {"Content-Type": "application/xml"});
       var site = new Site();
       site.client = helper.createClient();
       site.id = "1";
@@ -229,7 +229,7 @@ describe("Site", function(){
     });
     it("fail on error status code", function(done){
       var data = {peerName: "SIP Peer 1", description: "Sip Peer 1 description"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/sites/1/sippeers").reply(400, "<Response><ErrorCode>400</ErrorCode><Description>Error</Description></Response>");
+      helper.nock().post("/accounts/FakeAccountId/sites/1/sippeers").reply(400, "<Response><ErrorCode>400</ErrorCode><Description>Error</Description></Response>");
       var site = new Site();
       site.client = helper.createClient();
       site.id = "1";
@@ -243,7 +243,7 @@ describe("Site", function(){
   });
   describe("#getOrders", function(done){
     it("should get a list of orders", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/orders").reply(200, helper.xml.siteOrders, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/sites/1/orders").reply(200, helper.xml.siteOrders, {"Content-Type": "application/xml"});
       var site = new Site();
       site.id = "1";
       site.client = helper.createClient();
@@ -258,7 +258,7 @@ describe("Site", function(){
   });
   describe("#getInserviceNumbers", function(done){
     it("should get a list of inservice numbers", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/sites/1/inserviceNumbers").reply(200, helper.xml.inServiceNumbers, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/sites/1/inserviceNumbers").reply(200, helper.xml.inServiceNumbers, {"Content-Type": "application/xml"});
       var site = new Site();
       site.id = "1";
       site.client = helper.createClient();
