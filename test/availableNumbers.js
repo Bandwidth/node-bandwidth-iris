@@ -14,7 +14,7 @@ describe("AvailableNumbers", function(){
   });
   describe("#list", function(){
     it("should return numbers", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/availableNumbers?areaCode=866&quantity=5").reply(200, helper.xml.availableNumbers, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/availableNumbers?areaCode=866&quantity=5").reply(200, helper.xml.availableNumbers, {"Content-Type": "application/xml"});
       AvailableNumbers.list(helper.createClient(), {areaCode: 866, quantity: 5}, function(err, res){
         if(err){
           return done(err);
@@ -34,7 +34,7 @@ describe("AvailableNumbers", function(){
       });
     });
     it("should return numbers (with default client)", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/availableNumbers?areaCode=866&quantity=5").reply(200, helper.xml.availableNumbers, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/availableNumbers?areaCode=866&quantity=5").reply(200, helper.xml.availableNumbers, {"Content-Type": "application/xml"});
       AvailableNumbers.list({areaCode: 866, quantity: 5}, function(err, res){
         if(err){
           return done(err);

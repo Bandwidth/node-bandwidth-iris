@@ -14,7 +14,7 @@ describe("City", function(){
   });
   describe("#list", function(){
     it("should return cities", function(done){
-      helper.nock().get("/v1.0/cities?state=NC").reply(200, helper.xml.cities, {"Content-Type": "application/xml"});
+      helper.nock().get("/cities?state=NC").reply(200, helper.xml.cities, {"Content-Type": "application/xml"});
       City.list(helper.createClient(), {state: "NC"}, function(err, cities){
         if(err){
           return done(err);
@@ -26,7 +26,7 @@ describe("City", function(){
       });
     });
     it("should return cities (with default client)", function(done){
-      helper.nock().get("/v1.0/cities?state=NC").reply(200, helper.xml.cities, {"Content-Type": "application/xml"});
+      helper.nock().get("/cities?state=NC").reply(200, helper.xml.cities, {"Content-Type": "application/xml"});
       City.list({state: "NC"}, function(err, cities){
         if(err){
           return done(err);
@@ -38,7 +38,7 @@ describe("City", function(){
       });
     });
     it("should fail for error status code", function(done){
-      helper.nock().get("/v1.0/cities?state=NC").reply(400);
+      helper.nock().get("/cities?state=NC").reply(400);
       City.list(helper.createClient(), {state: "NC"}, function(err, cities){
         if(err){
           return done();

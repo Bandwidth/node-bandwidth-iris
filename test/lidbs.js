@@ -14,7 +14,7 @@ describe("Lidbs", function(){
   });
   describe("#list", function(){
     it("should return a list of Lidbs Orders ", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/lidbs").reply(200, helper.xml.lidbs, {"Content-Type":"application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/lidbs").reply(200, helper.xml.lidbs, {"Content-Type":"application/xml"});
       Lidbs.list(helper.createClient(), {}, function(err,list){
         if(err){
           return done(err);
@@ -26,7 +26,7 @@ describe("Lidbs", function(){
   });
   describe("#get", function(){
     it("should get Lidbs successfully", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/lidbs/1").reply(200, helper.xml.lidb, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/lidbs/1").reply(200, helper.xml.lidb, {"Content-Type": "application/xml"});
       Lidbs.get(helper.createClient(), "1", function(err, lidbs){
         if(err){
           return done(err);
@@ -51,8 +51,8 @@ describe("Lidbs", function(){
           }
         }
       }
-      helper.nock().post("/v1.0/accounts/FakeAccountId/lidbs", helper.buildXml({lidbOrder: data})).reply(201, "", {"Location": "/v1.0/accounts/FakeAccountId/lidbs/1"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/lidbs/1").reply(200, helper.xml.lidb, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/lidbs", helper.buildXml({lidbOrder: data})).reply(201, "", {"Location": "/accounts/FakeAccountId/lidbs/1"});
+      helper.nock().get("/accounts/FakeAccountId/lidbs/1").reply(200, helper.xml.lidb, {"Content-Type": "application/xml"});
       Lidbs.create(helper.createClient(), data, function(err,lidbs){
         if(err){
           return done(err);

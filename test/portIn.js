@@ -28,7 +28,7 @@ describe("PortIn", function(){
           }
         }
       };
-      helper.nock().post("/v1.0/accounts/FakeAccountId/portins", helper.buildXml({lnpOrder: data})).reply(200, helper.xml.portIn);
+      helper.nock().post("/accounts/FakeAccountId/portins", helper.buildXml({lnpOrder: data})).reply(200, helper.xml.portIn);
       PortIn.create(helper.createClient(), data, function(err, item){
         if(err){
           return done(err);
@@ -52,7 +52,7 @@ describe("PortIn", function(){
           }
         }
       };
-      helper.nock().post("/v1.0/accounts/FakeAccountId/portins", helper.buildXml({lnpOrder: data})).reply(200, helper.xml.portIn);
+      helper.nock().post("/accounts/FakeAccountId/portins", helper.buildXml({lnpOrder: data})).reply(200, helper.xml.portIn);
       PortIn.create(data, function(err, item){
         if(err){
           return done(err);
@@ -76,7 +76,7 @@ describe("PortIn", function(){
           }
         }
       };
-      helper.nock().post("/v1.0/accounts/FakeAccountId/portins").reply(400, "");
+      helper.nock().post("/accounts/FakeAccountId/portins").reply(400, "");
       PortIn.create(helper.createClient(), data,  function(err, item){
         if(err){
           return done();
@@ -94,7 +94,7 @@ describe("PortIn", function(){
           pinNumber: "0000"
         }
       };
-      helper.nock().put("/v1.0/accounts/FakeAccountId/portins/1", helper.buildXml({lnpOrderSupp: data})).reply(200);
+      helper.nock().put("/accounts/FakeAccountId/portins/1", helper.buildXml({lnpOrderSupp: data})).reply(200);
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -103,7 +103,7 @@ describe("PortIn", function(){
   });
   describe("#delete", function(){
     it("should delete a site", function(done){
-      helper.nock().delete("/v1.0/accounts/FakeAccountId/portins/1").reply(200);
+      helper.nock().delete("/accounts/FakeAccountId/portins/1").reply(200);
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -112,7 +112,7 @@ describe("PortIn", function(){
   });
   describe("#getAreaCodes", function(){
     it("should return areaCodes", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/areaCodes").reply(200, helper.xml.orderAreaCodes, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/portins/1/areaCodes").reply(200, helper.xml.orderAreaCodes, {"Content-Type": "application/xml"});
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -127,7 +127,7 @@ describe("PortIn", function(){
   });
   describe("#getNpaNxx", function(){
     it("should return npaNxx", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/npaNxx").reply(200, helper.xml.orderNpaNxx, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/portins/1/npaNxx").reply(200, helper.xml.orderNpaNxx, {"Content-Type": "application/xml"});
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -143,7 +143,7 @@ describe("PortIn", function(){
   });
   describe("#getTotals", function(){
     it("should return totals", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/totals").reply(200, helper.xml.orderTotals, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/portins/1/totals").reply(200, helper.xml.orderTotals, {"Content-Type": "application/xml"});
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -159,7 +159,7 @@ describe("PortIn", function(){
   });
   describe("#getHistory", function(){
     it("should return totals", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/history").reply(200, helper.xml.orderHistory, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/portins/1/history").reply(200, helper.xml.orderHistory, {"Content-Type": "application/xml"});
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -174,7 +174,7 @@ describe("PortIn", function(){
   });
   describe("#getTns", function(){
     it("should return tns", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/tns").reply(200, helper.xml.orderTns, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/portins/1/tns").reply(200, helper.xml.orderTns, {"Content-Type": "application/xml"});
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -191,7 +191,7 @@ describe("PortIn", function(){
   });
   describe("#getNotes", function(){
     it("should return notes", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/portins/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -207,7 +207,7 @@ describe("PortIn", function(){
       });
     });
     it("should fail for error status code", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/notes").reply(400);
+      helper.nock().get("/accounts/FakeAccountId/portins/1/notes").reply(400);
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -222,8 +222,8 @@ describe("PortIn", function(){
   describe("#addNote", function(){
     it("should add new note", function(done){
       var data = {userId: "customer", description: "Test"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/portins/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/v1.0/accounts/FakeAccountId/portins/1/notes/11299"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/portins/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/accounts/FakeAccountId/portins/1/notes/11299"});
+      helper.nock().get("/accounts/FakeAccountId/portins/1/notes").reply(200, helper.xml.notes, {"Content-Type": "application/xml"});
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -239,8 +239,8 @@ describe("PortIn", function(){
     });
     it("should fail on loading notes error", function(done){
       var data = {userId: "customer", description: "Test"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/portins/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/v1.0/accounts/FakeAccountId/portins/1/notes/11299"});
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/notes").reply(500);
+      helper.nock().post("/accounts/FakeAccountId/portins/1/notes", helper.buildXml({note: data})).reply(200, "", {"Location": "/accounts/FakeAccountId/portins/1/notes/11299"});
+      helper.nock().get("/accounts/FakeAccountId/portins/1/notes").reply(500);
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -253,7 +253,7 @@ describe("PortIn", function(){
     });
     it("should fail on error status code", function(done){
       var data = {userId: "customer", description: "Test"};
-      helper.nock().post("/v1.0/accounts/FakeAccountId/portins/1/notes", helper.buildXml({note: data})).reply(400);
+      helper.nock().post("/accounts/FakeAccountId/portins/1/notes", helper.buildXml({note: data})).reply(400);
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -268,7 +268,7 @@ describe("PortIn", function(){
   });
   describe("#getFiles", function(){
     it("should return list of files", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/loas?metadata=true").reply(200, helper.xml.files, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/portins/1/loas?metadata=true").reply(200, helper.xml.files, {"Content-Type": "application/xml"});
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -283,7 +283,7 @@ describe("PortIn", function(){
       });
     });
     it("should return list of files (without metadata)", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/loas?metadata=false").reply(200, helper.xml.files, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/portins/1/loas?metadata=false").reply(200, helper.xml.files, {"Content-Type": "application/xml"});
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -297,7 +297,7 @@ describe("PortIn", function(){
       });
     });
     it("should fail for error status code", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/loas?metadata=false").reply(400);
+      helper.nock().get("/accounts/FakeAccountId/portins/1/loas?metadata=false").reply(400);
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -311,7 +311,7 @@ describe("PortIn", function(){
   });
   describe("#getFileMetadata", function(){
     it("should return file's metadata", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/loas/file.txt/metadata").reply(200, helper.xml.fileMetadata, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/portins/1/loas/file.txt/metadata").reply(200, helper.xml.fileMetadata, {"Content-Type": "application/xml"});
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -327,7 +327,7 @@ describe("PortIn", function(){
   describe("#updateFileMetadata", function(){
     it("should update file's metadata", function(done){
       var metadata = { documentName: "doc", documentType: "type"};
-      helper.nock().put("/v1.0/accounts/FakeAccountId/portins/1/loas/file.txt/metadata", helper.buildXml({ fileMetaData: metadata})).reply(200);
+      helper.nock().put("/accounts/FakeAccountId/portins/1/loas/file.txt/metadata", helper.buildXml({ fileMetaData: metadata})).reply(200);
       var order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -337,7 +337,7 @@ describe("PortIn", function(){
   describe("#getFile", function(){
     var tmpFile = path.join(os.tmpdir(), "dest.txt");
     beforeEach(function(){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/portins/1/loas/file.txt").reply(200, "12345", {"Content-Type": "text/plain"});
+      helper.nock().get("/accounts/FakeAccountId/portins/1/loas/file.txt").reply(200, "12345", {"Content-Type": "text/plain"});
     });
     afterEach(function(done){
       nock.cleanAll();
@@ -392,7 +392,7 @@ describe("PortIn", function(){
   describe("#createFile", function(){
     var order, tmpFile = path.join(os.tmpdir(), "dest.txt");
     beforeEach(function(done){
-      helper.nock().post("/v1.0/accounts/FakeAccountId/portins/1/loas", "12345", {"Content-Type": "text/plain"}).reply(200, helper.xml.fileCreated, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/portins/1/loas", "12345", {"Content-Type": "text/plain"}).reply(200, helper.xml.fileCreated, {"Content-Type": "application/xml"});
       order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -431,7 +431,7 @@ describe("PortIn", function(){
     });
     it("should fail on error status code", function(done){
       nock.cleanAll();
-      helper.nock().post("/v1.0/accounts/FakeAccountId/portins/1/loas", "11111", {"Content-Type": "text/plain"}).reply(400);
+      helper.nock().post("/accounts/FakeAccountId/portins/1/loas", "11111", {"Content-Type": "text/plain"}).reply(400);
       order.createFile(new Buffer.from("11111", "utf8"), "text/plain", function(err, fileName){
         if(err){
           return done();
@@ -441,7 +441,7 @@ describe("PortIn", function(){
     });
     it("should upload file to the server (default media type)", function(done){
       nock.cleanAll();
-      helper.nock().post("/v1.0/accounts/FakeAccountId/portins/1/loas", "12345", {"Content-Type": "application/octet-stream"}).reply(200, helper.xml.fileCreated, {"Content-Type": "application/xml"});
+      helper.nock().post("/accounts/FakeAccountId/portins/1/loas", "12345", {"Content-Type": "application/octet-stream"}).reply(200, helper.xml.fileCreated, {"Content-Type": "application/xml"});
       order.createFile(new Buffer.from("12345", "utf8"), function(err, fileName){
         if(err){
           return done(err);
@@ -454,7 +454,7 @@ describe("PortIn", function(){
   describe("#updateFile", function(){
     var order, tmpFile = path.join(os.tmpdir(), "dest.txt");
     beforeEach(function(done){
-      helper.nock().put("/v1.0/accounts/FakeAccountId/portins/1/loas/test.txt", "12345", {"Content-Type": "text/plain"}).reply(200);
+      helper.nock().put("/accounts/FakeAccountId/portins/1/loas/test.txt", "12345", {"Content-Type": "text/plain"}).reply(200);
       order = new PortIn();
       order.id = 1;
       order.client = helper.createClient();
@@ -475,7 +475,7 @@ describe("PortIn", function(){
     });
     it("should fail on error status code", function(done){
       nock.cleanAll();
-      helper.nock().put("/v1.0/accounts/FakeAccountId/portins/1/loas/test.txt", "11111", {"Content-Type": "text/plain"}).reply(400);
+      helper.nock().put("/accounts/FakeAccountId/portins/1/loas/test.txt", "11111", {"Content-Type": "text/plain"}).reply(400);
       order.updateFile("test.txt", new Buffer.from("11111", "utf8"), "text/plain", function(err){
         if(err){
           return done();
@@ -485,7 +485,7 @@ describe("PortIn", function(){
     });
     it("should upload file to the server (default media type)", function(done){
       nock.cleanAll();
-      helper.nock().put("/v1.0/accounts/FakeAccountId/portins/1/loas/test.txt", "12345", {"Content-Type": "application/octet-stream"}).reply(200, helper.xml.fileCreated, {"Content-Type": "application/xml"});
+      helper.nock().put("/accounts/FakeAccountId/portins/1/loas/test.txt", "12345", {"Content-Type": "application/octet-stream"}).reply(200, helper.xml.fileCreated, {"Content-Type": "application/xml"});
       order.updateFile("test.txt", new Buffer.from("12345", "utf8"), done);
     });
   });

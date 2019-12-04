@@ -13,7 +13,7 @@ describe("AvailableNpaNxx", function(){
   });
   describe("#list", function(){
     it("should return numbers", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/availableNpaNxx?areaCode=919").reply(200, helper.xml.availableNpaNxx, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/availableNpaNxx?areaCode=919").reply(200, helper.xml.availableNpaNxx, {"Content-Type": "application/xml"});
       AvailableNpaNxx.list(helper.createClient(), {areaCode: 919}, function(err, items){
         if(err){
           return done(err);
@@ -33,7 +33,7 @@ describe("AvailableNpaNxx", function(){
       });
     });
     it("should return numbers (with default client)", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/availableNpaNxx?areaCode=919").reply(200, helper.xml.availableNpaNxx, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId/availableNpaNxx?areaCode=919").reply(200, helper.xml.availableNpaNxx, {"Content-Type": "application/xml"});
       AvailableNpaNxx.list({areaCode: 919}, function(err, items){
         if(err){
           return done(err);
@@ -53,7 +53,7 @@ describe("AvailableNpaNxx", function(){
       });
     });
     it("should fail on error status code", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId/availableNpaNxx?areaCode=919").reply(400);
+      helper.nock().get("/accounts/FakeAccountId/availableNpaNxx?areaCode=919").reply(400);
       AvailableNpaNxx.list(helper.createClient(), {areaCode: 919}, function(err, items){
         if(err){
           return done();

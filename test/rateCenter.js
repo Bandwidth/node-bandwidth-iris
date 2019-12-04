@@ -14,7 +14,7 @@ describe("RateCenter", function(){
   });
   describe("#list", function(){
     it("should return list of rateCenters", function(done){
-      var span = helper.nock().get("/v1.0/rateCenters?available=true&state=NC").reply(200, helper.xml.rateCenters, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/rateCenters?available=true&state=NC").reply(200, helper.xml.rateCenters, {"Content-Type": "application/xml"});
       RateCenter.list(helper.createClient(), {available:true, state:"NC"}, function(err, list){
         if(err){
           return done(err);
@@ -27,7 +27,7 @@ describe("RateCenter", function(){
       });
     });
     it("should return list of rateCenters (with 1 item)", function(done){
-      var span = helper.nock().get("/v1.0/rateCenters?available=true&state=NC").reply(200, helper.xml.rateCenters1, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/rateCenters?available=true&state=NC").reply(200, helper.xml.rateCenters1, {"Content-Type": "application/xml"});
       RateCenter.list(helper.createClient(), {available:true, state:"NC"}, function(err, list){
         if(err){
           return done(err);
@@ -40,7 +40,7 @@ describe("RateCenter", function(){
       });
     });
     it("should return list of rateCenters (with default client)", function(done){
-      var span = helper.nock().get("/v1.0/rateCenters?available=true&state=NC").reply(200, helper.xml.rateCenters, {"Content-Type": "application/xml"});
+      var span = helper.nock().get("/rateCenters?available=true&state=NC").reply(200, helper.xml.rateCenters, {"Content-Type": "application/xml"});
       RateCenter.list({available:true, state:"NC"}, function(err, list){
         if(err){
           return done(err);
@@ -54,7 +54,7 @@ describe("RateCenter", function(){
     });
 
     it("should fail for error status code", function(done){
-      helper.nock().get("/v1.0/rateCenters?available=true&state=NC").reply(400);
+      helper.nock().get("/rateCenters?available=true&state=NC").reply(400);
       RateCenter.list(helper.createClient(), {available:true, state:"NC"}, function(err, list){
         if(err){
           return done();

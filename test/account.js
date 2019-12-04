@@ -14,7 +14,7 @@ describe("Account", function(){
   });
   describe("#get", function(){
     it("should return account", function(done){
-      helper.nock().get("/v1.0/accounts/FakeAccountId").reply(200, helper.xml.account, {"Content-Type": "application/xml"});
+      helper.nock().get("/accounts/FakeAccountId").reply(200, helper.xml.account, {"Content-Type": "application/xml"});
       Account.get(helper.createClient(), function(err, account){
         if(err){
           return done(err);
