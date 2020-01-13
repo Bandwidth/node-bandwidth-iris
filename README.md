@@ -4,6 +4,10 @@
 
 NodeJs Client library for IRIS / BBS API
 
+**Notice**: As of January 13th, 2020, this project has been moved to https://github.com/Bandwidth/node-numbers and the project has been renamed to `@bandwidth/numbers` to better organize Bandwidth's SDKs. This project will remain published but will not receive any more updates. Please redirect issues to the new repo.
+
+Outside of the package name change, no other changes were made with this transition, and `@bandwidth/numbers` version 1.0.0 works exactly like this package.
+
 ## Supported Versions
 This SDK stable for node versions 7 and above
 
